@@ -216,9 +216,9 @@
                     min-width: 260px;
                     margin-bottom: 20px;
                     .label{
-                        font-size: 12px;
+                        font-size: 13px;
                         margin-right: 10px;
-                        min-width: 60px;
+                        min-width: 65px;
                         text-align: right;
                         display: inline-block;
                     }

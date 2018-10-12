@@ -17,7 +17,7 @@
                     
                     <div class="input-item">
                          <span class="label">姓名：</span>
-                         <el-input placeholder="按姓名查询" class="inline-input" size="mini">
+                         <el-input placeholder="按姓名查询" class="inline-input" size="small">
                          </el-input>
                     </div>
 
@@ -199,7 +199,7 @@
                         display: inline-block;
                         margin-right: 10px;
                         .label{
-                            font-size: 12px;
+                            font-size: 14px;
                         }
                     }
                     .inline-input{

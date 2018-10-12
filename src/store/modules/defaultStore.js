@@ -20,7 +20,6 @@ const state = {
           icon:"iconfont icon-dashboard",
           childrens:[]
         },
-
         {
           id:2,
           url:"",
@@ -29,21 +28,21 @@ const state = {
           childrens:[
               {
               id:21,
-              url:"/home",
+              url:"/pro-msg",
               name:"项目信息管理",
               icon:"",
               childrens:[]
             },
             {
               id:22,
-              url:"/home",
+              url:"/pro-material",
               name:"项目物料管理",
               icon:"",
               childrens:[]
             },
             {
               id:23,
-              url:"/home",
+              url:"/pro-room",
               name:"项目物料库存管理",
               icon:"",
               childrens:[]
@@ -115,7 +114,7 @@ const state = {
             },
             {
               id:84,
-              url:"/form1",
+              url:"/form",
               name:"综合表单",
               icon:"fa fa-home",
               childrens:[]

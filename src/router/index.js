@@ -8,6 +8,7 @@ import Home from '../pages/home/home.vue';
 import Roles from "../pages/roles/roles.vue";
 import Groups from '../pages/groups/groups.vue';
 import Users from '../pages/users/users.vue';
+import Form from '../pages/form/form.vue'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
           path:'/users',
           name:'users',
           component: Users
+        },
+        {
+          path:'/form',
+          name:'form',
+          component: Form
         },
       ]
     },
