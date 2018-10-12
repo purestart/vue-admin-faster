@@ -21,7 +21,7 @@
                             <span class="label">描述</span>
                             <el-input class="item-input"  size="mini" />
                         </div>
-                         <div v-for="item in 5" class="item">
+                         <div :key="item" v-for="item in 5" class="item">
                             <span class="label">描述</span>
                             <el-input class="item-input"  size="mini" />
                         </div>

@@ -80,7 +80,7 @@ const state = {
               {
                 id:34,
                 url:"/users",
-                name:"用户管理",
+                name:"人员管理",
                 icon:"fa fa-home",
                 childrens:[]
               }
