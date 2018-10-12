@@ -1,0 +1,48 @@
+
+// 弹出框设置
+
+.el-notification .el-icon-warning{
+    color:#faa82d;
+  }
+  .el-notification .el-icon-success{
+    color:#36c262;
+  }
+  .el-notification .el-icon-success{
+    color:#36c262;
+  }
+  .el-notification .el-icon-info{
+    color:#1989fa;
+  }
+  .el-notification .el-icon-error{
+    color:#f5222d;
+  }
+  
+  @keyframes dialog-fade-in {
+    0% {
+      /*transform: translate3d(0, 100%, 0);*/
+      transform:scale(0.5,0.5);
+      opacity: 0;
+    }
+    100% {
+      /*transform: translate3d(0, 0, 0);*/
+      transform:scale(1,1);
+      opacity: 1;
+    }
+  }
+  @keyframes dialog-fade-out {
+    0% {
+      /*transform: translate3d(0, 0, 0);*/
+      opacity: 1;
+    }
+    100% {
+      /*transform: translate3d(0, 10%, 0);*/
+      opacity: 0;
+    }
+  }
+  
+  .el-dialog__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

@@ -13,7 +13,7 @@
       :router="true"
     >
       <template v-if="true" v-for="item in menus">
-                <el-menu-item v-if="!item.childrens || item.childrens.length==0" :key="item.id" :index="item.url" class="spec_menu_item"><i class="fa fa-home"></i><span slot="title">{{item.name}}</span></el-menu-item>
+                <el-menu-item v-if="!item.childrens || item.childrens.length==0" :key="item.id" :index="item.url" class="spec_menu_item"><i :class="item.icon"></i><span slot="title">{{item.name}}</span></el-menu-item>
                 <el-submenu :popper-class="Theme.yellowheader? 'yellow-pover-class':'blue-pover-class'" v-else-if="item.childrens || item.childrens.length>0" :index="item.id+'_'"  :key="item.id" >
                   <template slot="title">
                     <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
@@ -85,6 +85,30 @@
         background: rgba(253,242,210,1) !important;
       }
     }
+
+    .iconfont{
+     
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: baseline;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+      vertical-align: middle;
+      margin-right: 5px;
+     
+      width: 24px;
+      text-align: center;
+      font-size: 18px;
+      color: #555555 !important;
+
+    }
+
     .submenu3{
       .el-submenu__title{
         padding-left: 40px !important;
@@ -97,7 +121,8 @@
       list-style:none;
       background-color: #ffffff !important;
       i{
-        color: #222222 !important;
+        // color: #222222 !important;
+         color: #555555 !important;
       }
     }
     .el-submenu__title:hover{

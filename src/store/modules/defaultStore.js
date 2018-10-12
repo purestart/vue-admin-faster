@@ -17,7 +17,7 @@ const state = {
           id:1,
           url:"/home",
           name:"首页",
-          icon:"fa fa-home",
+          icon:"iconfont icon-dashboard",
           childrens:[]
         },
 
@@ -25,7 +25,7 @@ const state = {
           id:2,
           url:"",
           name:"项目管理",
-          icon:"el-icon-location",
+          icon:"iconfont icon-location-fill",
           childrens:[
               {
               id:21,
@@ -72,32 +72,17 @@ const state = {
               },
               {
                 id:33,
-                url:"/office",
+                url:"/groups",
                 name:"部门管理",
                 icon:"fa fa-home",
                 childrens:[]
             },
               {
                 id:34,
-                url:"/menus",
+                url:"/users",
                 name:"用户管理",
                 icon:"fa fa-home",
-                childrens:[
-                         {
-                        id:6,
-                        url:"/page1",
-                        name:"基础用户",
-                        icon:"fa fa-home",
-                        childrens:[]
-                      },
-                       {
-                        id:7,
-                        url:"/page2",
-                        name:"其他用户",
-                        icon:"fa fa-home",
-                        childrens:[]
-                      },
-                ]
+                childrens:[]
               }
           ]
         },
