@@ -8,7 +8,10 @@ import Home from '../pages/home/home.vue';
 import Roles from "../pages/roles/roles.vue";
 import Groups from '../pages/groups/groups.vue';
 import Users from '../pages/users/users.vue';
-import Form from '../pages/form/form.vue'
+import Form from '../pages/form/form.vue';
+import ProjectInfo from '../pages/project/project-info.vue';
+import PreProject from '../pages/project/pre-project.vue';
+import Profile from "../pages/profile/profile.vue";
 
 Vue.use(Router)
 
@@ -49,6 +52,21 @@ export default new Router({
           path:'/form',
           name:'form',
           component: Form
+        },
+        {
+          path:'/project-info',
+          name:'project-info',
+          component: ProjectInfo
+        },
+        {
+          path:'/pre-project',
+          name:'pre-project',
+          component: PreProject
+        },
+        {
+          path:'/profile',
+          name:'profile',
+          component: Profile
         },
       ]
     },

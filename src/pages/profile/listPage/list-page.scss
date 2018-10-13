@@ -1,0 +1,100 @@
+.profile-list-page{
+  overflow: auto;
+
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+
+  .handle{
+    margin-top: 10px;
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+    .el-row{
+      display: flex;
+    }
+    .kk{
+      align-self: flex-end;
+      display: flex;
+      .el-autocomplete{
+        input{
+          border-radius: 4px 0 0 4px !important;
+          width: 172px;
+        }
+      }
+      .el_button{
+        border-radius: 0 4px 4px 0 ;
+        width: 28px;
+        min-width: 28px;
+        height: 28px;
+        padding: 0;
+        margin-right: 10px;
+      }
+      .h_btn{
+        width: 28px !important;
+        min-width: 28px !important;
+        height: 28px !important;
+        padding: 7px 0 !important;
+        color:#1989FA;
+      }
+      .h_btn1{
+        margin-left: 10px !important;
+      }
+      .el-select{
+        width: 70px !important;
+        .el-input__inner{
+          padding:0 18px 0 0 !important;
+          text-align: center;
+        }
+      }
+    }
+  }
+  // .el-table{
+  //   margin-top: 10px;
+  //   font-size: 12px;
+  //   margin-bottom: 20px;
+  //   .el-table__row td{
+  //     border-bottom: 0 none;
+  //     border-right: 0 none;
+  //   }
+  //   .has-gutter{
+  //     th{
+  //       height:32px !important;
+  //       min-height: 32px !important;
+  //       background:rgba(244,248,250,1);
+  //       color:rgba(60,60,60,1);
+  //       padding: 6px 0 !important;
+  //       &:first-child>.cell{
+  //         border: 0 none;
+  //       }
+  //     }
+  //     td{
+  //       color:rgba(60,60,60,1);
+  //     }
+  //   }
+  // }
+  .el-pagination{
+    padding-right: 40px;
+    margin-bottom: 15px;
+    .el-input__inner{
+      border-radius: 6px !important;
+    }
+    .btn-prev,.btn-next{
+      background: #ffffff ;
+      border:1px solid rgba(0,0,0,0.15);
+      border-radius: 6px;
+    }
+    .el-pager{
+      li{
+        background: #ffffff ;
+        border:1px solid rgba(0,0,0,0.15);
+        border-radius: 6px;
+        font-weight: normal ;
+      }
+    }
+  }
+  .handle2{
+    margin-top: 30px;
+  }
+}

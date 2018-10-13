@@ -41,6 +41,13 @@
     min-height: 400px;
   }
 
+  .el-menu-item-group__title {
+      padding: 0px;
+      line-height: normal;
+      font-size: 12px;
+      color: #909399;
+  }
+
 .Ynav{
   background:#fff;
   h3{

@@ -78,6 +78,7 @@ export default {
           Url:'/menus',
           timeLine: 100,
           comment: '无',
+          _expanded:true,
           children: [
             {
               id: 2,

@@ -80,6 +80,7 @@ export default {
           number:"",
           desc:"组织架构",
           comment: '无',
+          _expanded:true,
           children: [
             {
               id: 2,

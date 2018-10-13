@@ -25,6 +25,9 @@ Vue.use(VueQuillEditor);
 import './assets/styles/transition.scss';
 import './assets/styles/el-styles.scss';
 
+import echarts from 'echarts';
+Vue.prototype.$echarts = echarts;
+
 Vue.config.productionTip = false;
 
 

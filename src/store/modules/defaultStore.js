@@ -28,14 +28,14 @@ const state = {
           childrens:[
               {
               id:21,
-              url:"/pro-msg",
+              url:"/project-info",
               name:"项目信息管理",
               icon:"",
               childrens:[]
             },
             {
               id:22,
-              url:"/pro-material",
+              url:"/pre-project",
               name:"项目物料管理",
               icon:"",
               childrens:[]
@@ -49,11 +49,83 @@ const state = {
             },
           ]
         },
+        {
+          id:5,
+          url:"",
+          name:"代码生成",
+          icon:"iconfont icon-fa-codepen",
+          childrens:[
+              {
+              id:51,
+              url:"/pro-msg",
+              name:"表单配置",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:52,
+              url:"/pro-material",
+              name:"生成示例",
+              icon:"",
+              childrens:[]
+            },
+          ]
+        },
+        {
+          id:4,
+          url:"",
+          name:"我的应用",
+          icon:"el-icon-menu",
+          childrens:[
+              {
+              id:41,
+              url:"/profile",
+              name:"个人信息",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:42,
+              url:"/pre",
+              name:"文件管理",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:43,
+              url:"/pro-room",
+              name:"我的日程",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:43,
+              url:"/pro-room",
+              name:"通讯录",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:43,
+              url:"/pro-room",
+              name:"信箱",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:43,
+              url:"/pro-room",
+              name:"我的好友",
+              icon:"",
+              childrens:[]
+            },
+          ]
+        },
          {
           id:3,
           url:"",
           name:"权限管理",
-          icon:"el-icon-menu",
+          icon:"iconfont icon-security",
           childrens:[
                 {
                   id:31,
@@ -89,26 +161,26 @@ const state = {
           id:8,
           url:"/roles",
           name:"页面管理",
-          icon:"fa fa-home",
+          icon:"iconfont icon-fa-columns",
           childrens:[
             {
               id:81,
               url:"/list1",
-              name:"列表页一",
+              name:"列表页",
               icon:"fa fa-home",
               childrens:[]
             },
             {
               id:82,
               url:"/list2",
-              name:"列表页二",
+              name:"tab页面",
               icon:"fa fa-home",
               childrens:[]
             },
             {
               id:83,
               url:"/list3",
-              name:"列表页三",
+              name:"综合报表",
               icon:"fa fa-home",
               childrens:[]
             },
@@ -124,15 +196,8 @@ const state = {
         id:9,
         url:"/roles",
         name:"系统管理",
-        icon:"fa fa-home",
+        icon:"iconfont icon-Afa-cog",
         childrens:[
-          {
-            id:91,
-            url:"/list1",
-            name:"日志管理",
-            icon:"fa fa-home",
-            childrens:[]
-          },
           {
             id:92,
             url:"/list2",
@@ -140,8 +205,43 @@ const state = {
             icon:"fa fa-home",
             childrens:[]
           },
+          {
+            id:92,
+            url:"/list2",
+            name:"系统配置",
+            icon:"fa fa-home",
+            childrens:[]
+          },
         ]
-        },
+        },{
+          id:10,
+          url:"/moniter",
+          name:"系统监控",
+          icon:"iconfont icon-fa-video-camera",
+          childrens:[
+            {
+              id:101,
+              url:"/log",
+              name:"日志查询",
+              icon:"fa fa-home",
+              childrens:[]
+            },
+            {
+              id:102,
+              url:"/druid",
+              name:"连接池监视",
+              icon:"fa fa-home",
+              childrens:[]
+            },
+            {
+              id:102,
+              url:"/druid",
+              name:"系统监控管理",
+              icon:"fa fa-home",
+              childrens:[]
+            },
+          ]
+          },
 
       ],
     selectedMenu: {},
