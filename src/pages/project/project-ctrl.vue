@@ -25,12 +25,22 @@
                           
                           <div class="item">
                             <span class="label">品类</span>
-                            <el-input class="item-input" size="small" v-model="dataForm.types" placeholder="品类" clearable></el-input>
+                            <el-select class="item-input" size="small" v-model="dataForm.types" placeholder="品类" >
+                              <el-option label="选项一" value="value1">
+                              </el-option>
+                              <el-option label="选项二" value="value2">
+                              </el-option>
+                            </el-select>
                           </div>
                           
                           <div class="item">
                             <span class="label">阶段</span>
-                            <el-input class="item-input" size="small" v-model="dataForm.stage" placeholder="阶段" clearable></el-input>
+                            <el-select class="item-input" size="small" v-model="dataForm.stage" placeholder="阶段" >
+                              <el-option label="选项一" value="value1">
+                              </el-option>
+                              <el-option label="选项二" value="value2">
+                              </el-option>
+                            </el-select>
                           </div>
                           
                     </div>
@@ -142,10 +152,14 @@
       </el-table-column>
 
       <el-table-column
-        prop="update_date"
         header-align="center"
         align="center"
-        label="更新日期">
+        label="创建日期">
+        <template slot-scope="scope">
+            <div>
+                {{scope.row.update_date | dateformat}}
+            </div>
+        </template>
       </el-table-column>
 
       <el-table-column

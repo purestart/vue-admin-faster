@@ -15,19 +15,29 @@
       </el-form-item>
     
       <el-form-item label="项目地址" prop="project_address">
-        <el-input v-model="dataForm.project_address" placeholder="项目地址"></el-input>
+        <el-input type="textarea" :rows="3" v-model="dataForm.project_address" placeholder="项目地址"></el-input>
       </el-form-item>
     
       <el-form-item label="品类" prop="types">
-        <el-input v-model="dataForm.types" placeholder="品类"></el-input>
+          <el-select v-model="dataForm.types" placeholder="品类"  @focus="adjustSelectWidth">
+            <el-option label="选项一" value="value1">
+            </el-option>
+            <el-option label="选项二" value="value2">
+            </el-option>
+          </el-select>
       </el-form-item>
     
       <el-form-item label="阶段" prop="stage">
-        <el-input v-model="dataForm.stage" placeholder="阶段"></el-input>
+          <el-select v-model="dataForm.stage" placeholder="阶段"  @focus="adjustSelectWidth">
+            <el-option label="选项一" value="value1">
+            </el-option>
+            <el-option label="选项二" value="value2">
+            </el-option>
+          </el-select>
       </el-form-item>
     
       <el-form-item label="合同数量" prop="contract_num">
-        <el-input v-model="dataForm.contract_num" placeholder="合同数量"></el-input>
+        <el-input-number v-model="dataForm.contract_num" placeholder="合同数量"  ></el-input-number>
       </el-form-item>
     
     </el-form>
