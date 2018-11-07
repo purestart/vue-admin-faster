@@ -68,6 +68,13 @@ const state = {
               icon:"",
               childrens:[]
             },
+            {
+              id:24,
+              url:"/project-ctrl",
+              name:"项目总控表",
+              icon:"",
+              childrens:[]
+            },
               {
               id:21,
               url:"/project-info",

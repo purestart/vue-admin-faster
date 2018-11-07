@@ -106,7 +106,7 @@
               </div>
             </div>
 
-                        <div class="info-box">
+            <div class="info-box">
               <div class="left-wraper">
 
                 <div class="form-item">

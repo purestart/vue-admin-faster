@@ -4,9 +4,10 @@
 * Update:2018-08-06
 */
 //http://localhost:8081
-const url = 'http://localhost:8060';
 //基础Url配置
+const url = 'http://localhost:8060';
 
+//图表库配置
 const iconList=[
   "iconfont icon-dashboard",
   "iconfont icon-location-fill",
