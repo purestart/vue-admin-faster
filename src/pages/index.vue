@@ -5,19 +5,23 @@
             <Header></Header>
         </div>
         <div class="body">
-            <div :class="ShowHide?'close-nav':'nav'" :style="Theme.yellowheader ? {backgroundColor:'#ffffff'}:{backgroundColor:'#23336f'}">
-               <div :class="[Theme.yellowheader ? 'YShowHide':'BShowHide','ShowHide']" @click="toggleShow($event)">
+            <div :style="'background-color:'+Theme1.currentTheme.navBgColor" :class="ShowHide?'close-nav':'nav'" >
+               <div :style="'background-color:'+Theme1.currentTheme.baseColor" class="ShowHide YShowHide" @click="toggleShow($event)">
                  <i class="el-icon-d-arrow-left" v-if="!ShowHide"></i>
                  <i class="el-icon-d-arrow-right" v-else></i>
                </div>
                 <Nav :isCollapse="ShowHide" :lips="lips"></Nav>
             </div>
             <div class="container">
+              
               <h3>
                 <div class="top">{{header}}</div>
               </h3>
+
               <transition name="fade-transform" mode="out-in">
+                <keep-alive>
                 <router-view></router-view>
+                </keep-alive>
               </transition>
             </div>
         </div>
@@ -42,8 +46,11 @@ export default {
     ...mapState({
       msg:state=>state.default.msg,
       Theme:state=>state.default.Theme,
-      header:state=>state.default.header
+      header:state=>state.default.header,
+      Theme1:state=>state.default.Theme1,
     }),
+  },
+  watch:{
   },
   methods: {
     ...mapActions(["fetchCourse","deftheme","LoadHeader"]),
@@ -175,7 +182,7 @@ export default {
   text-align: center;
   width: 20px;
   height: 43px;
- background:rgba(44,64,140,1);
+  background:rgba(44,64,140,1);
   color: #ffffff;
   line-height: 43px;
   position: absolute;

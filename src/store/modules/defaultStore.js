@@ -4,12 +4,52 @@
 import userApi from '../../api/demo'
 
 const state = {
-    msg: "vuex data",
+  msg: "vuex data",
   header: '',
+  permissions:["sys:user:delete","sys:user:export"],
   Theme: {
     header: true,
     yellowheader: true,
     blueheader: false,
+  },
+  Theme1:{
+    yellowTheme:{
+      baseColor:"rgba(255,209,73,1)",//主题基础色
+      className:"yellowTheme",
+      name:"黄色主题",
+      navBgColor:"#ffffff",//菜单背景颜色
+      navTextColor:"#222222",//菜单字体颜色
+      navActiveTextColor:"#ED8113",//菜单选中字体颜色
+      headerFontColor:"#3C3C3C",
+    },
+    blueTheme:{
+      name:"深蓝色主题",
+      baseColor:"#23336f",//主题基础色
+      className:"blueTheme",
+      
+      navBgColor:"#23336f",//菜单背景颜色
+      navTextColor:"#fff",//菜单字体颜色
+      navActiveTextColor:"#1e90ff",//菜单选中字体颜色
+      headerFontColor:"#ffffff",
+    },
+    orangeTheme:{
+      name:"橘黄色主题",
+      baseColor:"rgba(240, 133, 25, 1)",//主题基础色
+      className:"orangeTheme",
+      headerFontColor:"#ffffff",
+      navBgColor:"#ffffff",//菜单背景颜色
+      navTextColor:"#222222",//菜单字体颜色
+      navActiveTextColor:"rgba(240, 133, 25, 1)",//菜单选中字体颜色
+    },
+    currentTheme:{
+      name:"橘黄色主题",
+      baseColor:"rgba(240, 133, 25, 1)",//主题基础色
+      className:"orangeTheme",
+      headerFontColor:"#ffffff",
+      navBgColor:"#ffffff",//菜单背景颜色
+      navTextColor:"#222222",//菜单字体颜色
+      navActiveTextColor:"rgba(240, 133, 25, 1)",//菜单选中字体颜色
+    },
   },
   menus:
       [
@@ -26,6 +66,13 @@ const state = {
           name:"项目管理",
           icon:"iconfont icon-location-fill",
           childrens:[
+            {
+              id:24,
+              url:"/enter-page",
+              name:"业务启动流程管理",
+              icon:"",
+              childrens:[]
+            },
               {
               id:21,
               url:"/project-info",
@@ -50,15 +97,66 @@ const state = {
           ]
         },
         {
+          id:11,
+          url:"",
+          name:"报表管理",
+          icon:"iconfont icon-location-fill",
+          childrens:[
+              {
+              id:111,
+              url:"/custom-chart",
+              name:"客户业务报表",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:112,
+              url:"/pre-project",
+              name:"项目物料管理",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:113,
+              url:"/pro-room",
+              name:"项目物料库存管理",
+              icon:"",
+              childrens:[]
+            },
+          ]
+        },
+        
+        {
           id:5,
           url:"",
           name:"代码生成",
           icon:"iconfont icon-fa-codepen",
           childrens:[
+            {
+              id:54,
+              url:"/databases",
+              name:"数据库管理",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:55,
+              url:"/module",
+              name:"模板管理",
+              icon:"",
+              childrens:[]
+            },
               {
               id:51,
-              url:"/pro-msg",
-              name:"表单配置",
+              url:"/gen-list",
+              name:"数据表单配置",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:53,
+              url:"/form-gen",
+              name:"表单生成器",
               icon:"",
               childrens:[]
             },
@@ -99,21 +197,21 @@ const state = {
               childrens:[]
             },
             {
-              id:43,
+              id:44,
               url:"/pro-room",
               name:"通讯录",
               icon:"",
               childrens:[]
             },
             {
-              id:43,
+              id:45,
               url:"/pro-room",
               name:"信箱",
               icon:"",
               childrens:[]
             },
             {
-              id:43,
+              id:46,
               url:"/pro-room",
               name:"我的好友",
               icon:"",
@@ -206,7 +304,7 @@ const state = {
             childrens:[]
           },
           {
-            id:92,
+            id:93,
             url:"/list2",
             name:"系统配置",
             icon:"fa fa-home",
@@ -234,7 +332,7 @@ const state = {
               childrens:[]
             },
             {
-              id:102,
+              id:103,
               url:"/druid",
               name:"系统监控管理",
               icon:"fa fa-home",
@@ -247,120 +345,7 @@ const state = {
     selectedMenu: {},
     mainMenu: [],
     editData:{},
-    tableData: [
-      {
-      id:1,
-      date: '2016-05-03',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:2,
-      date: '2016-05-02',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:3,
-      date: '2016-05-04',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:4,
-      date: '2016-05-01',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:5,
-      date: '2016-05-08',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:6,
-      date: '2016-05-06',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }, {
-      id:7,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:8,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:9,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:10,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:10,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:10,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:10,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    },{
-      id:10,
-      date: '2016-05-07',
-      name: '王小虎',
-      province: '上海',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }],
+    tableData: [],
 }
 const mutations = {
   updateMsg(state, payload) {
@@ -381,11 +366,21 @@ const mutations = {
     state.Theme.yellowheader = !state.Theme.yellowheader
     state.Theme.blueheader = !state.Theme.blueheader
     window.localStorage.setItem('Theme', JSON.stringify(state.Theme))
+
+    if(state.Theme1.currentTheme.className=='orangeTheme'){
+      state.Theme1.currentTheme=state.Theme1.blueTheme;
+    }else{
+      state.Theme1.currentTheme=state.Theme1.orangeTheme;
+    }
+    
+    
+    window.localStorage.setItem('Theme1', JSON.stringify(state.Theme1))
   },
   detheme(state, payload) {
-    let tmpTheme = JSON.parse(window.localStorage.getItem('Theme'));
-    if (tmpTheme) {
-      state.Theme = JSON.parse(window.localStorage.getItem('Theme'))
+   // let tmpTheme = JSON.parse(window.localStorage.getItem('Theme'));
+    let tmpTheme1 = JSON.parse(window.localStorage.getItem('Theme1'));
+    if (tmpTheme1) {
+      //state.Theme1 = JSON.parse(window.localStorage.getItem('Theme1'))
     }
   },
   EditSelect(state, payload) {

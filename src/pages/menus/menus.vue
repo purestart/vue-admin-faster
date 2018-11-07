@@ -7,46 +7,71 @@
   <div class="app-container">
     <div class="handle">
     <el-row>
-      <el-button type="primary"  size="mini" @click="open"><i class="el-icon-plus"></i> 新增</el-button>
-      <el-button type="primary"  size="mini" @click="open"><i class="el-icon-edit"></i> 编辑</el-button>
-      <el-button type="primary"  size="mini" @click="open"><i class="el-icon-delete"></i> 删除</el-button>
-      <el-button type="primary"  size="mini" @click="open"><i class="fa fa-key"></i> 授权</el-button>
-      <el-button type="primary"  size="mini" @click="open"><i class="fa fa-key"></i> 授权查看</el-button>
+      <el-button size="small" v-if="true" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+      
     </el-row>
     </div>
     <div class="table-wrapper">
     <tree-table :data="sourceData" :evalFunc="func" :evalArgs="args" :typeName="typeName" :expandAll="expandAll" >
-      <el-table-column label="菜单编码">
+      <el-table-column
+        header-align="center"
+        align="center"
+        label="图标">
         <template slot-scope="scope">
-          <span style="color:sandybrown">{{scope.row.name}}</span>
-          <!-- <el-tag>{{scope.row.timeLine+'ms'}}</el-tag> -->
+          <!-- <icon-svg :name="scope.row.icon || ''"></icon-svg> -->
+          <i :class='scope.row.icon'></i>
         </template>
       </el-table-column>
-            <el-table-column label="菜单Url">
+
+      <el-table-column
+        prop="type"
+        header-align="center"
+        align="center"
+        label="类型">
         <template slot-scope="scope">
-            <div>{{scope.row.Url}}</div>
+          <el-tag v-if="scope.row.type === 0" size="small">目录</el-tag>
+          <el-tag v-else-if="scope.row.type === 1" size="small" type="success">菜单</el-tag>
+          <el-tag v-else-if="scope.row.type === 2" size="small" type="info">按钮</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="菜单描述">
+
+        <el-table-column
+        prop="order_num"
+        header-align="center"
+        align="center"
+        label="排序号">
+      </el-table-column>
+      <el-table-column
+        prop="url"
+        header-align="center"
+        align="center"
+        width="150"
+        :show-overflow-tooltip="true"
+        label="菜单URL">
+      </el-table-column>
+      <el-table-column
+        prop="perms"
+        header-align="center"
+        align="center"
+        width="150"
+        :show-overflow-tooltip="true"
+        label="授权标识">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        header-align="center"
+        align="center"
+        width="150"
+        label="操作">
         <template slot-scope="scope">
-            <div>{{scope.row.timeLine}}</div>
-          <!-- <el-tooltip effect="dark" :content="scope.row.timeLine+'ms'" placement="left">
-            <div class="processContainer">
-              <div class="process" :style="{ width:scope.row._width * 500+'px',
-              background:scope.row._width>0.5?'rgba(233,0,0,.5)':'rgba(0,0,233,0.5)',
-              marginLeft:scope.row._marginLeft * 500+'px' }">
-                <span style="display:inline-block"></span>
-              </div>
-            </div>
-          </el-tooltip> -->
+          <!-- $hasPermission('sys:menu:update') -->
+          <el-button v-if="true" type="text" size="small" @click="addOrUpdateHandle(scope.row.menu_id)">修改</el-button>
+          <el-button v-if="true" type="text" size="small" @click="deleteHandle(scope.row.menu_id)">删除</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button type="text" size="small" @click="message(scope.row)">点击</el-button>
-        </template>
-      </el-table-column>
+
     </tree-table>
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
     </div>
   </div>
 </template>
@@ -58,144 +83,77 @@
 */
 import treeTable from '../../components/TreeTable'
 import treeToArray from '../../components/TreeTable/eval.js'
-
+import AddOrUpdate from './menu-add-or-update'
 
 export default {
   name: 'Menus',
     components: {
-    treeTable
+    treeTable,
+    AddOrUpdate
   },
   data() {
     return {
+      dataListLoading: false,
+      addOrUpdateVisible: false,
       func: treeToArray,
       expandAll: false,
       typeName:"菜单名称",
       dynamicTags: ["请至少选择一个数据项进行操作"],
-      sourceData:
-        {
-          id: 1,
-          name: '菜单管理',
-          Url:'/menus',
-          timeLine: 100,
-          comment: '无',
-          _expanded:true,
-          children: [
-            {
-              id: 2,
-              name: '主页',
-              Url:'/menus',
-              timeLine: 10,
-              comment: '无'
-            },
-            {
-              id: 3,
-              name: '应用实例维护',
-              Url:'/menus',
-              timeLine: 90,
-              comment: '无',
-              children: [
-                {
-                  id: 4,
-                  name: '菜单管理',
-                  Url:'/menus',
-                  timeLine: 5,
-                  comment: '无'
-                },
-                {
-                  id: 5,
-                  name: '功能管理',
-                  Url:'/menus',
-                  timeLine: 10,
-                  comment: '无'
-                },
-                {
-                  id: 6,
-                  name: '事件6',
-                  Url:'/menus',
-                  timeLine: 75,
-                  comment: '无',
-                  children: [
-                    {
-                      id: 7,
-                      name: '事件7',
-                      Url:'/menus',
-                      timeLine: 50,
-                      comment: '无',
-                      children: [
-                        {
-                          id: 71,
-                          name: '事件71',
-                          Url:'/menus',
-                          timeLine: 25,
-                          comment: 'xx'
-                        },
-                        {
-                          id: 72,
-                          name: '事件72',
-                          Url:'/menus',
-                          timeLine: 5,
-                          comment: 'xx'
-                        },
-                        {
-                          id: 73,
-                          name: '事件73',
-                          Url:'/menus',
-                          timeLine: 20,
-                          comment: 'xx'
-                        }
-                      ]
-                    },
-                    {
-                      id: 8,
-                      name: '事件8',
-                      Url:'/menus',
-                      timeLine: 25,
-                      comment: '无'
-                    },
-                     {
-                      id: 81,
-                      name: '事件8',
-                      Url:'/menus',
-                      timeLine: 25,
-                      comment: '无'
-                    },
-                    {
-                      id: 82,
-                      name: '事件8',
-                      Url:'/menus',
-                      timeLine: 25,
-                      comment: '无'
-                    },
-                    {
-                      id: 83,
-                      name: '事件8',
-                      Url:'/menus',
-                      timeLine: 25,
-                      comment: '无'
-                    },
-                                        {
-                      id: 84,
-                      name: '事件8',
-                      Url:'/menus',
-                      timeLine: 25,
-                      comment: '无'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
+      sourceData:{},
       args:null,
     }
+  },
+  mounted(){
+    this.getDataList();
   },
   methods: {
     message(row) {
       this.$message.info(row.name)
     },
+    getDataList(){
+      this.$axios.get(`${this.$baseUrl}/sys/menu/nav`).then(({data}) => {
+          console.log(data);
+          this.sourceData=data.data;
+      })
+    },
     open(){
 
-    }
+    },
+    addOrUpdateHandle (id) {
+        this.addOrUpdateVisible = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.dataForm.id = id || 0
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 删除
+      deleteHandle (id) {
+        this.$confirm(`确定对[id=${id}]进行[删除]操作?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.post(
+            `${this.$baseUrl}/sys/sys-menu/delete`,
+            {
+              ids: [id]
+            }
+          ).then(({data}) => {
+            if (data && data.success === 1) {
+              this.$message({
+                message: '操作成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(data.msg)
+            }
+          })
+        }).catch(() => {})
+      }
   }
 }
 </script>

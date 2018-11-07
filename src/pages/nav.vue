@@ -1,15 +1,15 @@
 <template>
-  <el-row :class="[Theme.yellowheader ? 'Ynav':'Bnav']">
-      <h3 v-if="lips">系统管理</h3>
-      <h3 v-else></h3>
+  <el-row :style="'background-color:'+Theme1.currentTheme.navBgColor" :class="Theme1.currentTheme.className" class="Ynav">
+      <h3 class="sys-name" v-if="lips">系统管理</h3>
+      <h3 class="sys-name" v-else></h3>
     <el-menu
       :default-active="$route.path"
       class="el-menu-vertical-demo menu"
       @select="getHeader"
       :collapse="isCollapse"
-      :background-color="Theme.yellowheader ? '#fff':'#23336f'"
-      :text-color="Theme.yellowheader ? '#222222':'#fff'"
-      :active-text-color="Theme.yellowheader ? '#ED8113':'#1e90ff'"
+      :background-color="Theme1.currentTheme.navBgColor"
+      :text-color="Theme1.currentTheme.navTextColor"
+      :active-text-color="Theme1.currentTheme.navActiveTextColor"
       :router="true"
     >
       <template v-if="true" v-for="item in menus">
@@ -49,7 +49,7 @@
   }
 
 .Ynav{
-  background:#fff;
+  //  background:#fff;
   h3{
     height: 50px;
     border-bottom: 1px solid #e4e4e4;
@@ -159,12 +159,14 @@
       }
     },
     mounted(){
+      console.log(this.Theme1.currentTheme);
     },
     computed:{
       ...mapState({
       msg:state=>state.default.msg,
       Theme:state=>state.default.Theme,
-      menus:state=>state.default.menus
+      menus:state=>state.default.menus,
+      Theme1:state=>state.default.Theme1,
     }),
     },
     props: ['isCollapse','lips'],

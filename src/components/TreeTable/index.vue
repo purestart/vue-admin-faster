@@ -6,12 +6,20 @@
 <template>
   <el-table 
    highlight-current-row 
-   size="small" 
+   size="small"
+   border
    :data="formatData" 
-   :row-style="showRow" 
-   v-bind="$attrs"    
+   :row-style="showRow"
+   v-bind="$attrs"
+   @selection-change="selectionChangeHandle"
     class="gray-header"
     >
+    <el-table-column
+        type="selection"
+        header-align="center"
+        align="center"
+        width="50">
+      </el-table-column>
     <el-table-column v-if="columns.length===0" width="200" :label="typeName">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
@@ -92,7 +100,10 @@ export default {
     // 图标显示
     iconShow(index, record) {
       return (index === 0 && record.children && record.children.length > 0)
-    }
+    },
+    selectionChangeHandle(val){
+      this.$emit("selectionChange",val);
+    },
   }
 }
 </script>

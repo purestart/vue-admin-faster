@@ -4,9 +4,21 @@
 * Update:2018-08-06
 */
 //http://localhost:8081
-const url = '';
+const url = 'http://localhost:8060';
 //基础Url配置
 
+const iconList=[
+  "iconfont icon-dashboard",
+  "iconfont icon-location-fill",
+  "iconfont icon-fa-codepen",
+  "iconfont icon-security",
+  "iconfont icon-fa-columns",
+  "iconfont icon-Afa-cog",
+  "iconfont icon-fa-video-camera",
+  "el-icon-menu"
+];
+
 export {
-  url
+  url,
+  iconList
 }

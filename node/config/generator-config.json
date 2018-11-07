@@ -1,0 +1,31 @@
+{
+    "mainPath":"io.renren",
+    "package":"io.renren.modules",
+    "moduleName":"video",
+    "author":"zcl",
+    "email":"xxx@qq.com",
+    "tablePrefix":"tb_",
+    "list_vue":"index.vue",
+    "add_or_update":"add-or-update.vue",
+    "schema":"schema.js",
+    "controller":"controller.js",
+    "service":"service.js",
+    "node_router":"index.js",
+    "node_type":{
+        "int":"INTEGER",
+        "integer":"INTEGER",
+        "bigint":"INTEGER",
+        "tinyint":"INTEGER",
+        "varchar":"STRING",
+        "varchar(255)":"STRING",
+        "varchar(64)":"STRING",
+        "varchar(128)":"STRING",
+        "datetime":"DATE",
+        "longtext":"STRING",
+        "text":"STRING",
+        "longblob":"STRING",
+        "float":"FLOAT",
+        "double":"DOUBLE",
+        "nvarchar":"STRING"
+    }
+}

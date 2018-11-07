@@ -14,12 +14,12 @@ export default function setAxios() {
   //测试验证
   //axios.defaults.headers.common['X-Token'] = 'mymengya123456';
 
-  //axios.defaults.baseURL = 'http://api.mymengya.com/mengyatest';
+  //axios.defaults.baseURL = '';
 
   axios.defaults.baseURL = url;
   console.log("=========setAxios==============");
   console.log("-"+url+"-");
-  axios.defaults.headers.common['X-Token'] = Cookies.get('token');
+  // axios.defaults.headers.common['X-Token'] = Cookies.get('token');
 
   return function fetch(url, method, cb, errcb, params) {
     if (method === 'get') {
