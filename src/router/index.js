@@ -15,13 +15,14 @@ import Profile from "../pages/profile/profile.vue";
 import FormGenerater from '../pages/form-generater/Container.vue';
 import GenList from "../pages/gen/gen-list.vue";
 import Databases from "../pages/gen/databases.vue";
-import AutoForm from "../pages/auto-form/auto-form.vue";
+
 
 import Customs from "../pages/sys/customs.vue";
 import EngChart from "../pages/sys/eng-chart.vue";
 import DealerChart from '../pages/sys/dealer-chart.vue';
 import WorkTeam from '../pages/sys/work-team.vue';
 import EnterPage from '../pages/project/enter-page.vue';
+import ProjectCtrl from "../pages/project/project-ctrl.vue";
 
 Vue.use(Router)
 
@@ -36,16 +37,19 @@ export default new Router({
         {
           path:'/menus',
           name:'menus',
+          meta:["菜单"],
           component: Menus
         },
         {
           path:'/home',
           name:'home',
+          meta:["首页"],
           component: Home
         },
         {
           path:'/roles',
           name:'roles',
+          meta:["角色"],
           component: Roles
         },
         {
@@ -56,11 +60,13 @@ export default new Router({
         {
           path:'/users',
           name:'users',
+          meta:["用户"],
           component: Users
         },
         {
           path:'/form',
           name:'form',
+          meta:["表单"],
           component: Form
         },
         {
@@ -81,47 +87,56 @@ export default new Router({
         {
           path:'/form-gen',
           name:'form-gen',
+          meta:["表单生成器"],
           component: FormGenerater
         },
         {
           path:'/gen-list',
           name:'gen-list',
+          meta:["数据表单配置"],
           component: GenList
         },
         {
           path:'/databases',
           name:'databases',
+          meta:["数据库"],
           component: Databases
-        },
-        {
-          path:'/auto-form',
-          name:'auto-form',
-          component: AutoForm
         },
         {
           path:'/customs',
           name:'customs',
+          meta:["自定义表"],
           component: Customs
         },
         {
           path:'/eng-chart',
           name:'eng-chart',
+          meta:["工程线"],
           component: EngChart
         },
         {
           path:'/dealer-chart',
           name:'dealer-chart',
+          meta:["经销商"],
           component: DealerChart
         },
         {
           path:'/work-team',
           name:'work-team',
+          meta:["施工队"],
           component: WorkTeam
         },
         {
           path:'/enter-page',
           name:'enter-page',
+          meta:["业务启动流程管理"],
           component: EnterPage
+        },
+        {
+          path:'/project-ctrl',
+          name:'project-ctrl',
+          meta:["项目总控表"],
+          component: ProjectCtrl
         },
       ]
     },

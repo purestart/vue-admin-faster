@@ -6,6 +6,7 @@
             highlight-current-row
             border
             stripe
+            @selection-change="selectionChangeHandle"
             >
             <el-table-column
             type="selection"
@@ -228,7 +229,9 @@
 
     },
     methods:{
-
+        selectionChangeHandle(val){
+            this.$emit("selectionChange",val);
+        },
     }
   }
 </script>

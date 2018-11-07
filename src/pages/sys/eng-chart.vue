@@ -170,7 +170,7 @@
                  },
                 tooltip : {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{a} <br/>{b} ({d}%)"
                 },
                 calculable : true,
                 series : [
@@ -179,31 +179,31 @@
                         type:'pie',
                         radius : ['50%', '70%'],
                         itemStyle : {
-                            normal : {
-                                label : {
-                                    show : false
-                                },
-                                labelLine : {
-                                    show : false
-                                }
-                            },
+                            // normal : {
+                            //     label : {
+                            //         show : false
+                            //     },
+                            //     labelLine : {
+                            //         show : false
+                            //     }
+                            // },
                             emphasis : {
                                 label : {
                                     show : true,
                                     position : 'center',
                                     textStyle : {
-                                        fontSize : '30',
+                                        fontSize : '16',
                                         fontWeight : 'bold'
                                     }
                                 }
                             }
                         },
                         data:[
-                            {value:335, name:'直接访问'},
-                            {value:310, name:'邮件营销'},
-                            {value:234, name:'联盟广告'},
-                            {value:135, name:'视频广告'},
-                            {value:1548, name:'搜索引擎'}
+                            {value:335, name:'直接访问： 335'},
+                            {value:310, name:'邮件营销： 335'},
+                            {value:234, name:'联盟广告： 234'},
+                            {value:135, name:'视频广告： 135'},
+                            {value:1548, name:'搜索引擎： 1548'}
                         ]
                     }
                 ]

@@ -15,7 +15,7 @@
             <div class="container">
               
               <h3>
-                <div class="top">{{header}}</div>
+                <div class="top">{{$route.meta?$route.meta[0]:''}}</div>
               </h3>
 
               <transition name="fade-transform" mode="out-in">
@@ -167,7 +167,7 @@ export default {
 }
 .body>.container>h3 .top{
   float: left;
-  width:124px;
+  min-width:124px;
   height:28px;
   font-size:16px;
   font-family:'微软雅黑';

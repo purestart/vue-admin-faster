@@ -7,11 +7,6 @@ const state = {
   msg: "vuex data",
   header: '',
   permissions:["sys:user:delete","sys:user:export"],
-  Theme: {
-    header: true,
-    yellowheader: true,
-    blueheader: false,
-  },
   Theme1:{
     yellowTheme:{
       baseColor:"rgba(255,209,73,1)",//主题基础色
@@ -109,20 +104,6 @@ const state = {
               icon:"",
               childrens:[]
             },
-            {
-              id:112,
-              url:"/pre-project",
-              name:"项目物料管理",
-              icon:"",
-              childrens:[]
-            },
-            {
-              id:113,
-              url:"/pro-room",
-              name:"项目物料库存管理",
-              icon:"",
-              childrens:[]
-            },
           ]
         },
         
@@ -182,41 +163,6 @@ const state = {
               icon:"",
               childrens:[]
             },
-            {
-              id:42,
-              url:"/pre",
-              name:"文件管理",
-              icon:"",
-              childrens:[]
-            },
-            {
-              id:43,
-              url:"/pro-room",
-              name:"我的日程",
-              icon:"",
-              childrens:[]
-            },
-            {
-              id:44,
-              url:"/pro-room",
-              name:"通讯录",
-              icon:"",
-              childrens:[]
-            },
-            {
-              id:45,
-              url:"/pro-room",
-              name:"信箱",
-              icon:"",
-              childrens:[]
-            },
-            {
-              id:46,
-              url:"/pro-room",
-              name:"我的好友",
-              icon:"",
-              childrens:[]
-            },
           ]
         },
          {
@@ -254,43 +200,7 @@ const state = {
                 childrens:[]
               }
           ]
-        },
-        {
-          id:8,
-          url:"/roles",
-          name:"页面管理",
-          icon:"iconfont icon-fa-columns",
-          childrens:[
-            {
-              id:81,
-              url:"/list1",
-              name:"列表页",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-            {
-              id:82,
-              url:"/list2",
-              name:"tab页面",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-            {
-              id:83,
-              url:"/list3",
-              name:"综合报表",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-            {
-              id:84,
-              url:"/form",
-              name:"综合表单",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-          ]
-      },{
+        },{
         id:9,
         url:"/roles",
         name:"系统管理",
@@ -302,45 +212,9 @@ const state = {
             name:"字典管理",
             icon:"fa fa-home",
             childrens:[]
-          },
-          {
-            id:93,
-            url:"/list2",
-            name:"系统配置",
-            icon:"fa fa-home",
-            childrens:[]
-          },
+          }
         ]
-        },{
-          id:10,
-          url:"/moniter",
-          name:"系统监控",
-          icon:"iconfont icon-fa-video-camera",
-          childrens:[
-            {
-              id:101,
-              url:"/log",
-              name:"日志查询",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-            {
-              id:102,
-              url:"/druid",
-              name:"连接池监视",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-            {
-              id:103,
-              url:"/druid",
-              name:"系统监控管理",
-              icon:"fa fa-home",
-              childrens:[]
-            },
-          ]
-          },
-
+        }
       ],
     selectedMenu: {},
     mainMenu: [],
@@ -363,9 +237,9 @@ const mutations = {
     }
   },
   theme(state, payload) {
-    state.Theme.yellowheader = !state.Theme.yellowheader
-    state.Theme.blueheader = !state.Theme.blueheader
-    window.localStorage.setItem('Theme', JSON.stringify(state.Theme))
+   // state.Theme.yellowheader = !state.Theme.yellowheader
+   // state.Theme.blueheader = !state.Theme.blueheader
+   // window.localStorage.setItem('Theme', JSON.stringify(state.Theme))
 
     if(state.Theme1.currentTheme.className=='orangeTheme'){
       state.Theme1.currentTheme=state.Theme1.blueTheme;

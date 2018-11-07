@@ -185,6 +185,12 @@
             }
             genTableApi.generateCode((res)=>{
                 console.log(res);
+                if(res.data.success==1 && res.data.data.ret.success==1){
+                    this.$message({
+                        type: 'success',
+                        message: '生成代码成功!'
+                    });
+                }
             },err=>console.log(err),params);
         },
         syncDb(row){
@@ -200,6 +206,12 @@
                     genApi.syncDb((res)=>{
                         console.log("syncDb");
                         console.log(res);
+                        if(res.data.success==1){
+                           this.$message({
+                                type: 'success',
+                                message: '同步成功!'
+                            });
+                        }
                         this.fetchGenTableList();
                     },err=>console.log(err),{id:row.id,name:row.name,remarks:row.remarks,attrs:attrs,db_id:row.db_id});
                 }).catch(() => {

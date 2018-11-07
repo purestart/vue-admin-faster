@@ -57,37 +57,38 @@
         }
     }
 
-        // 淡黄色主题颜色配置
-        &.blueTheme{
-            background-color: #23336f !important;
-            .h_nav{
-                .list{
-                    li{
-                        color: #f2f2f2 !important;
-                        &.active{
-                          color:#ffffff !important;
-                        }
-                    }
-                }
-                .h_user{
-                    .gap{
-                        background-color: #e4b8b8 !important;
-                    }
-                    .el-icon-setting{
+    // 淡黄色主题颜色配置
+    &.blueTheme{
+        background-color: #23336f !important;
+        .h_nav{
+            .list{
+                li{
+                    color: #f2f2f2 !important;
+                    &.active{
                         color:#ffffff !important;
                     }
-                    .el-icon-bell{
-                        color:#ffffff !important;
-                      }
-                      .bell-text{
-                        color:#ffffff !important;
-                      }
                 }
             }
+            .h_user{
+                .gap{
+                    background-color: #e4b8b8 !important;
+                }
+                .el-icon-setting{
+                    color:#ffffff !important;
+                }
+                .el-icon-bell{
+                    color:#ffffff !important;
+                    }
+                    .bell-text{
+                    color:#ffffff !important;
+                    }
+            }
         }
+    }
 
 }
 
+// 菜单主题
 #index-container{
     .body{
         .Ynav{
@@ -123,6 +124,17 @@
                 }
             }
             
+        }
+    }
+}
+
+//弹出菜单
+.el-menu--vertical{
+    &.orangeTheme{
+        .el-menu-item{
+            &:hover{
+                background: #fdf2d2 !important;
+            }
         }
     }
 }

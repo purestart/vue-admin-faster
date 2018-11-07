@@ -136,22 +136,22 @@
 
             <div class="btn-tool">
               <el-button type="primary" @click="addItem" size="mini"><i class="el-icon-plus"></i> 新增</el-button>
-              <el-button type="primary"  size="mini"><i class="el-icon-minus"></i> 删除</el-button>
+              <el-button type="primary" @click="deleteItem"  size="mini"><i class="el-icon-minus"></i> 删除</el-button>
             </div>
 
             <div class="tab-wraper">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                   <el-tab-pane label="数据库属性" name="first">
-                    <DataBaseForm :tableData="tableData.editAttrs" />
+                    <DataBaseForm @selectionChange="selectionChange" :tableData="tableData.editAttrs" />
                   </el-tab-pane>
                   <el-tab-pane label="页面属性" name="second">
-                    <PageProForm  :tableData="tableData.editAttrs"/>
+                    <PageProForm @selectionChange="selectionChange" :tableData="tableData.editAttrs"/>
                   </el-tab-pane>
                   <el-tab-pane label="页面校验" name="third">
-                    <PageCheckForm :tableData="tableData.editAttrs" />
+                    <PageCheckForm @selectionChange="selectionChange" :tableData="tableData.editAttrs" />
                   </el-tab-pane>
                   <el-tab-pane label="grid选择框（自定义java对象）" name="fourth">
-                    <GridTableForm :tableData="tableData.editAttrs" />
+                    <GridTableForm @selectionChange="selectionChange" :tableData="tableData.editAttrs" />
                   </el-tab-pane>
                 </el-tabs>
             </div>
@@ -233,7 +233,8 @@ import databasesSelecter from "./databasesSelecter.vue";
               type:'export',
               name:'导出'
             }
-          ]
+          ],
+          multiSelect:[],
       }
     },
     watch:{
@@ -267,6 +268,29 @@ import databasesSelecter from "./databasesSelecter.vue";
     },
     methods:{
       handleClick(){},
+      selectionChange(val){
+        this.multiSelect=val;
+      },
+      deleteItem(){
+        if(this.multiSelect.length>1){
+          this.$message({
+            type:"error",
+            message: '只能删除一行!'
+          });
+          return;
+        }
+        let ids=[];
+        this.tableData.editAttrs.forEach((item,index)=>{
+          this.multiSelect.forEach((selectItem)=>{
+            if(item.name==selectItem.name){
+              ids.push(index);
+            }
+          })
+        })
+        ids.forEach((idx)=>{
+          this.tableData.editAttrs.splice(idx,1);
+        })
+      },
       submitDbSelectForm(selectDb){
         console.log(selectDb);
         this.dbModelVisible=false;

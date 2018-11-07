@@ -26,7 +26,7 @@
 
                  <el-table-column label="选择" width="180">
                     <template slot-scope="scope">
-                        <el-radio @change.native="getCurrentRow(scope.$index)" :label="scope.row.id" v-model="itemId" class="textRadio">&nbsp;</el-radio>
+                        <el-radio @change.native="getCurrentRow(scope.$index,scope.row)" :label="scope.row.id" v-model="itemId" class="textRadio">&nbsp;</el-radio>
                         
                     </template>
                  </el-table-column>
@@ -187,25 +187,6 @@
              type:"mysql",
              host:"192.168.0.1"
          },
-         tableData: [{
-          id: '0',
-          name: 'myBD',
-          type:"MySql",
-          host:"192.168.1.1",
-          desc: '数据库'
-        }, {
-          id: '1',
-          name: 'ssql',
-          type:"MySql",
-          host:"192.168.1.1",
-          desc: '数据库'
-        }, {
-          id: '2',
-          name: 'ossbd',
-          type:"MySql",
-          host:"192.168.1.1",
-          desc: '数据库'
-        }],
       }
     },
     computed: {
@@ -235,6 +216,7 @@
             this.$emit("close",false);
         },
         getCurrentRow(index,row){
+            console.log(row);
             this.selectItem=row;
         },
         selectRow(row){

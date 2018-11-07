@@ -10,6 +10,8 @@ const sys_menu_controller=require('./sys/sys-menu-controller');
 
 const depts_controller=require('./dept/tb-depts-controller');
 
+const project_ctrl_controller=require('./project/project-ctrl-controller');
+
 module.exports={
     bdControllers,
     genTableController,
@@ -18,5 +20,6 @@ module.exports={
     customs_controller,
     sys_menu_controller,
     depts_controller,
+    project_ctrl_controller,
     
 }

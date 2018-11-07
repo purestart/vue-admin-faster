@@ -14,7 +14,8 @@
     >
       <template v-if="true" v-for="item in menus">
                 <el-menu-item v-if="!item.childrens || item.childrens.length==0" :key="item.id" :index="item.url" class="spec_menu_item"><i :class="item.icon"></i><span slot="title">{{item.name}}</span></el-menu-item>
-                <el-submenu :popper-class="Theme.yellowheader? 'yellow-pover-class':'blue-pover-class'" v-else-if="item.childrens || item.childrens.length>0" :index="item.id+'_'"  :key="item.id" >
+                <!-- :popper-class="Theme.yellowheader? 'yellow-pover-class':'blue-pover-class'" -->
+                <el-submenu :popper-class="Theme1.currentTheme.className" v-else-if="item.childrens || item.childrens.length>0" :index="item.id+'_'"  :key="item.id" >
                   <template slot="title">
                     <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
                   </template>
@@ -164,7 +165,7 @@
     computed:{
       ...mapState({
       msg:state=>state.default.msg,
-      Theme:state=>state.default.Theme,
+      
       menus:state=>state.default.menus,
       Theme1:state=>state.default.Theme1,
     }),

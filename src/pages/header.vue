@@ -25,7 +25,7 @@
               </el-popover>
               <el-dropdown
                 trigger="hover"
-                @command="selectSelf"
+                @command="changeSys()"
               >
               <li >更多系统</li>
               <el-dropdown-menu slot="dropdown">
@@ -158,9 +158,9 @@
 //import "./header.scss";
 
 import { mapActions, mapState } from "vuex";
-import DashboardSelector from './dashboard/fragment/DashboardSelector.vue';
+import DashboardSelector from "./dashboard/fragment/DashboardSelector.vue";
 export default {
-  components:{
+  components: {
     DashboardSelector
   },
   data() {
@@ -172,175 +172,182 @@ export default {
       color1: "#ffffff",
       color2: "#ffffff",
       modelVisible: false,
-      selectVisible:false,
-      userDashboard:[],
-      userDashboardClone : [],
+      selectVisible: false,
+      userDashboard: [],
+      userDashboardClone: [],
       rowHight: 30,
-      colNum :8,
-       menusData: [{
+      colNum: 8,
+      menusData: [
+        {
           id: 1,
-          label: '项目管理',
-          children: [{
-            id: 4,
-            label: '项目进度管理',
-            children: [{
-              id: 9,
-              label: '项目资料'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
+          label: "项目管理",
+          children: [
+            {
+              id: 4,
+              label: "项目进度管理",
+              children: [
+                {
+                  id: 9,
+                  label: "项目资料"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
           id: 2,
-          label: '报表管理',
-          children: [{
-            id: 5,
-            label: '综合报表'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
+          label: "报表管理",
+          children: [
+            {
+              id: 5,
+              label: "综合报表"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
           id: 3,
-          label: '我的应用',
-          children: [{
-            id: 7,
-            label: '菜单管理'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
+          label: "我的应用",
+          children: [
+            {
+              id: 7,
+              label: "菜单管理"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
         }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   computed: {
     ...mapState({
       msg: state => state.default.msg,
-      Theme: state => state.default.Theme,
+      // Theme: state => state.default.Theme,
       Theme1: state => state.default.Theme1
     }),
-    selected () {
-        return this.userDashboard.map((userDashboard) => userDashboard.dashboard.id)
+    selected() {
+      return this.userDashboard.map(
+        userDashboard => userDashboard.dashboard.id
+      );
     }
   },
   created() {
     this.initData();
   },
-  mounted() {
-    // $(".list li").click(function(e) {
-    //   $(this)
-    //     .addClass("active")
-    //     .siblings()
-    //     .removeClass("active");
-    // });
-  },
+  mounted() {},
   methods: {
     ...mapActions(["fetchCourse", "ThemeChange", "LoadHeader"]),
     initData() {
       let { data } = require("./dashboard/userDashBoard.json");
       console.log(data);
       if (data[0].dashboard) {
-          this.userDashboard = data
-       }
+        this.userDashboard = data;
+      }
     },
-    getSelectValue(){
-        this.$refs.DashboardSelector.onSelected();
-        this.selectVisible=false;
+    getSelectValue() {
+      this.$refs.DashboardSelector.onSelected();
+      this.selectVisible = false;
     },
-    onLayoutUpdated(){
-
-    },
-    sumitForm() {
-      
-    },
-    save () {
-      const list = []
-      this.userDashboard.forEach((userDashboard) => {
-      const clone = {...userDashboard}
-      clone.dashboardId = userDashboard.dashboard.id
-      list.push(clone)
-      })
+    onLayoutUpdated() {},
+    sumitForm() {},
+    save() {
+      const list = [];
+      this.userDashboard.forEach(userDashboard => {
+        const clone = { ...userDashboard };
+        clone.dashboardId = userDashboard.dashboard.id;
+        list.push(clone);
+      });
 
       // const {data} = await this.saveUserDashboard(list)
-      const data={success:true}
+      const data = { success: true };
       if (data) {
-      //this.$utils.message('保存成功！')
+        //this.$utils.message('保存成功！')
 
-      this.userDashboardClone = JSON.parse(JSON.stringify(this.userDashboard))
-      this.layoutUpdated = false
+        this.userDashboardClone = JSON.parse(
+          JSON.stringify(this.userDashboard)
+        );
+        this.layoutUpdated = false;
       }
     },
     toPage(name) {
       this.$router.push({ name: name });
     },
-    onSelected (dashboards) {
-        this.dashboard2UserDashboard(dashboards)
-        this.save()
-        //this.$utils.hideDialog()
+    onSelected(dashboards) {
+      this.dashboard2UserDashboard(dashboards);
+      this.save();
+      //this.$utils.hideDialog()
     },
-    dashboard2UserDashboard (dashboard) {
-            this.userDashboard = []
-            // 用户没有配置dashboard，后端返回默认的几个dashboard，需要转成userDashboard
-            let startX = 0
-            let startY = 0
-            dashboard.forEach((dashboard, index) => {
-            // 先根据类型定义宽和高
-            let w = 2
-            let h = 3
-            if (dashboard.type !== 'info') {
-                w = 4
-                h = 8
-            }
-            // 计算位置
-            const {x, y} = this.getLocation(startX, startY, w, h)
-            this.userDashboard.push({x, y, w, h, i: index + '', dashboard})
-            startX = x + w
-            startY = y
-            })
-        },
-        // 计算仪表盘的摆放位置的算法：从坐标为0，0的地方开始摆放第一个dashboard，后面的就从紧挨着前一个的位置开始，
-        // 以需要摆放的dashboard的宽高构建一个矩形区域，然后判断已经有dashboard和这个区域重叠，如果没有，就可以摆放
-        // 如果重叠，那么这个区域往后移动一个坐标，再次判断，直到区域可用
-        // 移动的方式是，先沿着x轴移动，x轴不能移动后（x+宽度>总宽度），再往y轴移动
-        getLocation (startX, startY, w, h) {
-            const userDashboard = this.userDashboard
-            if (userDashboard.length) {
-            // 看x轴方向是否能往后移动
-            if (startX + w > this.colNum) {
-                startY++
-                startX = 0
-            }
-            // 判断是否有dashboard和目标位置相交（中心点X的相对距离<宽度和的一半 && 中心点Y点距离<高度和的一半）
-            const center = {
-                x: startX + w / 2,
-                y: startY + h / 2
-            }
-            const dashboard = userDashboard.find((ud) => {
-                const centerTemp = {
-                x: ud.x + ud.w / 2,
-                y: ud.y + ud.h / 2
-                }
-                const xl = Math.abs(center.x - centerTemp.x)
-                const yl = Math.abs(center.y - centerTemp.y)
-                return xl < (w + ud.w) / 2 && yl < (h + ud.h) / 2
-            })
-            if (dashboard) {
-                // 移动一格
-                startX++
-                return this.getLocation(startX, startY, w, h)
-            }
-            }
-            return {x: startX, y: startY}
-        },
+    dashboard2UserDashboard(dashboard) {
+      this.userDashboard = [];
+      // 用户没有配置dashboard，后端返回默认的几个dashboard，需要转成userDashboard
+      let startX = 0;
+      let startY = 0;
+      dashboard.forEach((dashboard, index) => {
+        // 先根据类型定义宽和高
+        let w = 2;
+        let h = 3;
+        if (dashboard.type !== "info") {
+          w = 4;
+          h = 8;
+        }
+        // 计算位置
+        const { x, y } = this.getLocation(startX, startY, w, h);
+        this.userDashboard.push({ x, y, w, h, i: index + "", dashboard });
+        startX = x + w;
+        startY = y;
+      });
+    },
+    // 计算仪表盘的摆放位置的算法：从坐标为0，0的地方开始摆放第一个dashboard，后面的就从紧挨着前一个的位置开始，
+    // 以需要摆放的dashboard的宽高构建一个矩形区域，然后判断已经有dashboard和这个区域重叠，如果没有，就可以摆放
+    // 如果重叠，那么这个区域往后移动一个坐标，再次判断，直到区域可用
+    // 移动的方式是，先沿着x轴移动，x轴不能移动后（x+宽度>总宽度），再往y轴移动
+    getLocation(startX, startY, w, h) {
+      const userDashboard = this.userDashboard;
+      if (userDashboard.length) {
+        // 看x轴方向是否能往后移动
+        if (startX + w > this.colNum) {
+          startY++;
+          startX = 0;
+        }
+        // 判断是否有dashboard和目标位置相交（中心点X的相对距离<宽度和的一半 && 中心点Y点距离<高度和的一半）
+        const center = {
+          x: startX + w / 2,
+          y: startY + h / 2
+        };
+        const dashboard = userDashboard.find(ud => {
+          const centerTemp = {
+            x: ud.x + ud.w / 2,
+            y: ud.y + ud.h / 2
+          };
+          const xl = Math.abs(center.x - centerTemp.x);
+          const yl = Math.abs(center.y - centerTemp.y);
+          return xl < (w + ud.w) / 2 && yl < (h + ud.h) / 2;
+        });
+        if (dashboard) {
+          // 移动一格
+          startX++;
+          return this.getLocation(startX, startY, w, h);
+        }
+      }
+      return { x: startX, y: startY };
+    },
     ChangeTheme(a) {
       switch (a) {
         case "1":
-          console.log(222);
           break;
         case "2":
           break;
@@ -351,9 +358,6 @@ export default {
     },
     selectSelf(a) {
       switch (a) {
-        case "账号信息":
-          this.toPerson(a);
-          break;
         case "桌面配置":
           this.modelVisible = true;
           break;
@@ -365,18 +369,12 @@ export default {
           break;
       }
     },
+    changeSys() {
+      //更换系统
+    },
     logout() {
-      console.log("logout");
       //注销登录信息
       this.$router.push({ path: "/login" });
-    },
-    toPerson(key) {
-      this.LoadHeader(key);
-      this.$router.push({ path: "/PersonImfo" });
-    },
-    GoSecureSetting(key) {
-      this.LoadHeader(key);
-      this.$router.push({ path: "/SecureSetting" });
     }
   }
 };
@@ -525,10 +523,10 @@ export default {
       .config-box {
         min-height: 300px;
         border: 1px solid #e4e4e4;
-        .module-wraper{
+        .module-wraper {
           width: 100%;
           height: 100%;
-          border:1px solid #e4e4e4;
+          border: 1px solid #e4e4e4;
           padding: 5px;
           box-sizing: border-box;
         }

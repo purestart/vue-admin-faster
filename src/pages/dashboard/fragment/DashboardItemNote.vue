@@ -120,6 +120,7 @@ import DashboardTitle from './DashboardTitle.vue'
                 font-size: 18px;
                 font-weight: 500;
                 padding: 10px;
+                cursor: pointer;
                 &.active{
                     color: #f08519;
                 }
