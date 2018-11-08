@@ -31,6 +31,7 @@
           currentDb:{},
           tables:[],
           selectedTable:{},
+          typeList:[],
       }
     },
     created () {
@@ -48,6 +49,7 @@
         }
     },
     methods:{
+        
         changeTable(item){
             this.selectedTable=item;
             

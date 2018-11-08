@@ -1,5 +1,5 @@
 module.exports= function (sequelize, DataTypes) {
-    return sequelize.define('customs', {
+    return sequelize.define('tb_project_plan', {
       id: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -12,57 +12,51 @@ module.exports= function (sequelize, DataTypes) {
         primaryKey: false,
         
       },
+      custom_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        primaryKey: false,
+        
+      },
+      project_address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        primaryKey: false,
+        
+      },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        primaryKey: false,
+        
+      },
       create_date: {
         type: DataTypes.DATE,
         allowNull: true,
         primaryKey: false,
         
       },
-      age: {
+      plan_time: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: false,
-        
-      },
-      mytext: {
-        type: DataTypes.STRING,
         allowNull: true,
         primaryKey: false,
         
       },
-      blog: {
-        type: DataTypes.STRING,
+      actual_time: {
+        type: DataTypes.INTEGER,
         allowNull: true,
         primaryKey: false,
         
       },
-      fl: {
-        type: DataTypes.FLOAT,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      db: {
-        type: DataTypes.DOUBLE,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      remarks: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      update_date: {
-        type: DataTypes.DATE,
+      gap: {
+        type: DataTypes.INTEGER,
         allowNull: true,
         primaryKey: false,
         
       },
       
     }, {
-      tableName: 'customs',
+      tableName: 'tb_project_plan',
       createdAt: false, //去掉默认字段
       updatedAt: false  //去掉默认字段
     });

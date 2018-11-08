@@ -1,44 +1,52 @@
 
 <template>
-  <div class="page-{{obj.table.module_name}}--list">
+  <div class="page-sys--list">
 
     <div v-if="advanceSearchVisible" class="item-editer">
         <el-card>
             <div class="edit-box">
                 <div class="input-box">
                     <div class="item-row">
-                        {{#each(obj.table.columns)~}}
-                          {{#if(this.existAdvanceSearch)~}}
-                          {{#if(this.formItemType === 'datetime')~}}
+                        
+                          <div class="item">
+                            <span class="label">x姓名</span>
+                            <el-input class="item-input" size="small" v-model="dataForm.name" placeholder="x姓名" clearable></el-input>
+                          </div>
+                          
                         <div class="item">
-                            <span class="label">{{this.remarks}}</span>
+                            <span class="label">创建日期</span>
                             <!-- <el-input class="item-input"  size="small" /> -->
                             <el-date-picker
                             class="item-input" size="small"
                               type="datetime"
-                              v-model="dataForm.{{this.name}}"
-                              placeholder="{{this.remarks}}"
+                              v-model="dataForm.create_date"
+                              placeholder="创建日期"
                             >
                             </el-date-picker>
                         </div>
-                          {{elseif (this.formItemType === 'select')}}
+                          
                           <div class="item">
-                            <span class="label">{{this.remarks}}</span>
-                            <el-select class="item-input" size="small" v-model="dataForm.{{this.name}}" placeholder="{{this.remarks}}" >
-                              <el-option label="选项一" value="value1">
-                              </el-option>
-                              <el-option label="选项二" value="value2">
-                              </el-option>
-                            </el-select>
+                            <span class="label">年龄</span>
+                            <el-input class="item-input" size="small" v-model="dataForm.age" placeholder="年龄" clearable></el-input>
                           </div>
-                          {{else}}
+                          
                           <div class="item">
-                            <span class="label">{{this.remarks}}</span>
-                            <el-input class="item-input" size="small" v-model="dataForm.{{this.name}}" placeholder="{{this.remarks}}" clearable></el-input>
+                            <span class="label">长文本</span>
+                            <el-input class="item-input" size="small" v-model="dataForm.mytext" placeholder="长文本" clearable></el-input>
                           </div>
-                          {{~/if}}
-                          {{~/if}}
-                        {{~/each~}}
+                          
+                        <div class="item">
+                            <span class="label">更新日期</span>
+                            <!-- <el-input class="item-input"  size="small" /> -->
+                            <el-date-picker
+                            class="item-input" size="small"
+                              type="datetime"
+                              v-model="dataForm.update_date"
+                              placeholder="更新日期"
+                            >
+                            </el-date-picker>
+                        </div>
+                          
                     </div>
                 </div>
                 <div class="submit-box">
@@ -53,78 +61,34 @@
         </el-card>
     </div>
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-{{#each(obj.table.columns)~}}
-  {{#if(this.existSearch)~}}
-  {{#if(this.formItemType === 'datetime')~}}
-      <el-form-item prop="{{this.name}}">
+
+      <el-form-item>
+        <el-input size="small"  v-model="dataForm.name" placeholder="x姓名" clearable></el-input>
+      </el-form-item>
+  
+      <el-form-item prop="create_date">
         <el-date-picker
           size="small" 
           type="datetime"
-          v-model="dataForm.{{this.name}}"
-          placeholder="{{this.remarks}}"
+          v-model="dataForm.create_date"
+          placeholder="创建日期"
         >
         </el-date-picker>
       </el-form-item>
-  {{elseif (this.formItemType === 'select')}}
-      <el-form-item  prop="{{this.name}}">
-          <el-select size="small"  v-model="dataForm.{{this.name}}" placeholder="{{this.remarks}}" >
-            <el-option label="选项一" value="value1">
-            </el-option>
-            <el-option label="选项二" value="value2">
-            </el-option>
-          </el-select>
-      </el-form-item>
-  {{else}}
-      <el-form-item>
-        <el-input size="small"  v-model="dataForm.{{this.name}}" placeholder="{{this.remarks}}" clearable></el-input>
-      </el-form-item>
-  {{~/if}}
-  {{~/if}}
-{{~/each}}
-      {{#each(obj.table.buttons)~}}
-        {{#if(this === 'query')~}}
-      <el-form-item v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:query')">
+  
+      
+      <el-form-item v-if="$hasPermission('sys:customs:query')">
           <el-button size="small" @click="queryForm()">查询</el-button>
       </el-form-item>
-        {{~/if}}
-      {{~/each}}
-      {{~#each(obj.table.buttons)~}}
-        {{~#if(this === 'new')~}}
-      <el-form-item v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:save')">
+        
+      <el-form-item v-if="$hasPermission('sys:customs:save')">
           <el-button size="small"  type="primary" @click="addOrUpdateHandle()">新增</el-button>
       </el-form-item>
-         {{~/if}}
-      {{~/each}}
-      {{~#each(obj.table.buttons)~}}
-        {{~#if(this === 'delete')~}}
-      <el-form-item v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:delete')">
-          <el-button size="small"  type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-      </el-form-item>
-         {{~/if}}
-      {{~/each}}
-      {{~#each(obj.table.buttons)~}}
-        {{~#if(this === 'import')~}}
-      <el-form-item v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:import')">
-        <el-button size="small"  type="info" @click="exportHandle()">导入</el-button>
-      </el-form-item>
-           {{~/if}}
-      {{~/each}}
-      {{~#each(obj.table.buttons)~}}
-        {{~#if(this === 'export')~}}
-      <el-form-item v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:export')">
-        <el-button size="small" type="success" @click="exportHandle()">导出</el-button>
-      </el-form-item>
-        {{~/if}}
-      {{~/each}}
-      {{~#if(obj.table.existAdvanceSearch==='true')~}}
-      {{~#each(obj.table.buttons)~}}
-        {{~#if(this === 'query')~}}
-      <el-form-item  v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:query')"  style="float:right">
+         
+      <el-form-item  v-if="$hasPermission('sys:customs:query')"  style="float:right">
         <el-button icon="el-icon-search" @click="advanceSearchVisible=!advanceSearchVisible" size="small" class="pop_btn">高级查询</el-button>
        </el-form-item>
-         {{~/if}}
-      {{~/each}}
-      {{~/if}}
+         
     </el-form>
     <el-table
       :data="dataList"
@@ -139,29 +103,71 @@
         align="center"
         width="50">
       </el-table-column>
-{{#each(obj.table.columns)~}}
- {{#if(this.existList)~}}
- {{#if(this.formItemType === 'datetime')~}}
+
+      <el-table-column
+        prop="name"
+        header-align="center"
+        align="center"
+        label="x姓名">
+      </el-table-column>
+
       <el-table-column
         header-align="center"
         align="center"
         label="创建日期">
         <template slot-scope="scope">
             <div>
-                {{%{{scope.row.%}}{{this.name}}{{% | dateformat}}%}}
+                {{scope.row.create_date | dateformat}}
             </div>
         </template>
       </el-table-column>
-{{else}}
+
       <el-table-column
-        prop="{{this.name}}"
+        prop="age"
         header-align="center"
         align="center"
-        label="{{this.remarks}}">
+        label="年龄">
       </el-table-column>
-{{~/if}}
-{{~/if}}
-{{~/each}}
+
+      <el-table-column
+        prop="mytext"
+        header-align="center"
+        align="center"
+        label="长文本">
+      </el-table-column>
+
+      <el-table-column
+        prop="fl"
+        header-align="center"
+        align="center"
+        label="浮点">
+      </el-table-column>
+
+      <el-table-column
+        prop="db"
+        header-align="center"
+        align="center"
+        label="双进度">
+      </el-table-column>
+
+      <el-table-column
+        prop="remarks"
+        header-align="center"
+        align="center"
+        label="其它">
+      </el-table-column>
+
+      <el-table-column
+        header-align="center"
+        align="center"
+        label="创建日期">
+        <template slot-scope="scope">
+            <div>
+                {{scope.row.update_date | dateformat}}
+            </div>
+        </template>
+      </el-table-column>
+
       <el-table-column
         fixed="right"
         header-align="center"
@@ -169,16 +175,10 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          {{#each(obj.table.buttons)~}}
-              {{#if(this === 'edit')~}}
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:edit')">修改</el-button>
-              {{~/if}}
-          {{~/each}}
-          {{#each(obj.table.buttons)~}}
-              {{#if(this === 'delete')~}}
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('{{obj.table.module_name}}:{{obj.fileSubName}}:delete')">删除</el-button>
-              {{~/if}}
-          {{~/each}}
+          
+          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('sys:customs:edit')">修改</el-button>
+              
+          
         </template>
       </el-table-column>
     </el-table>
@@ -199,16 +199,14 @@
 </template>
 
 <script>
-  import AddOrUpdate from './{{obj.fileSubName}}-add-or-update'
+  import AddOrUpdate from './customs-add-or-update'
   export default {
     data () {
       return {
         dataForm: {
-          {{#each(obj.table.columns)~}}
-          {{#if(this.existSearch)~}}
-            {{this.name}}: '',
-          {{~/if}}
-          {{~/each}}
+          name: '',
+          create_date: '',
+          
         },
         query:{},
         dataList: [],
@@ -240,7 +238,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$axios.get(
-          `${this.$baseUrl}/{{obj.table.module_name}}/{{obj.fileSubName}}/list`,
+          `${this.$baseUrl}/sys/customs/list`,
           {
               params: {
                   'pageNum': this.pageIndex,
@@ -278,14 +276,14 @@
       addOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
-          this.$refs.addOrUpdate.dataForm.{{obj.keyname}} = id || 0
+          this.$refs.addOrUpdate.dataForm.id = id || 0
           this.$refs.addOrUpdate.init()
         })
       },
       // 删除
       deleteHandle (id) {
         var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.{{obj.keyname}}
+          return item.id
         })
         this.$confirm(`确定进行${id ? '删除' : '批量删除'}操作?`, '提示', {
           confirmButtonText: '确定',
@@ -293,7 +291,7 @@
           type: 'warning'
         }).then(() => {
           this.$axios.post(
-              `${this.$baseUrl}/{{obj.table.module_name}}/{{obj.fileSubName}}/delete`,
+              `${this.$baseUrl}/sys/customs/delete`,
                {ids}
            ).then(({data}) => {
             if (data && data.success === 1) {
@@ -321,7 +319,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .page-{{obj.table.module_name}}--list{
+  .page-sys--list{
     margin: 16px;
     padding: 16px;
     background-color: #ffffff;

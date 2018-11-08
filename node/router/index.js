@@ -12,6 +12,12 @@ const depts_controller=require('./dept/tb-depts-controller');
 
 const project_ctrl_controller=require('./project/project-ctrl-controller');
 
+const gen_template_controller=require('./gen/tb-gen-template-controller');
+
+const gen_type_controller=require('./gen/tb-gen-type-controller');
+
+const project_plan_controller=require('./project/tb-project-plan-controller');
+
 module.exports={
     bdControllers,
     genTableController,
@@ -21,5 +27,8 @@ module.exports={
     sys_menu_controller,
     depts_controller,
     project_ctrl_controller,
+    gen_template_controller,
+    gen_type_controller,
+    project_plan_controller,
     
 }

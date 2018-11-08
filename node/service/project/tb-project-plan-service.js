@@ -1,7 +1,7 @@
 
 const sequelize=require('../../conmon/mysql');
 const Sequelize = require('sequelize');
-const GenTable = require('../../schema/sys/customs')(sequelize,Sequelize); // 引入user的表结构
+const GenTable = require('../../schema/project/tb-project-plan-schema')(sequelize,Sequelize); // 引入user的表结构
 var uuid = require('node-uuid');
 
 var path=require('path');
@@ -64,14 +64,13 @@ module.exports={
             id:uuid.v1(),
             
           name:obj.name,
+          custom_name:obj.custom_name,
+          project_address:obj.project_address,
+          category:obj.category,
           create_date:obj.create_date,
-          age:obj.age,
-          mytext:obj.mytext,
-          blog:obj.blog,
-          fl:obj.fl,
-          db:obj.db,
-          remarks:obj.remarks,
-          update_date:obj.update_date,
+          plan_time:obj.plan_time,
+          actual_time:obj.actual_time,
+          gap:obj.gap,
           
       })
     },
@@ -98,19 +97,19 @@ module.exports={
       
         o.name=obj.name;
         
+        o.custom_name=obj.custom_name;
+        
+        o.project_address=obj.project_address;
+        
+        o.category=obj.category;
+        
         o.create_date=obj.create_date;
         
-        o.age=obj.age;
+        o.plan_time=obj.plan_time;
         
-        o.mytext=obj.mytext;
+        o.actual_time=obj.actual_time;
         
-        o.blog=obj.blog;
-        
-        o.fl=obj.fl;
-        
-        o.db=obj.db;
-        
-        o.remarks=obj.remarks;
+        o.gap=obj.gap;
         
       return await o.save();
 
@@ -129,32 +128,32 @@ module.exports={
           o.name=obj.name;
         }
         
+        if(obj.custom_name){
+          o.custom_name=obj.custom_name;
+        }
+        
+        if(obj.project_address){
+          o.project_address=obj.project_address;
+        }
+        
+        if(obj.category){
+          o.category=obj.category;
+        }
+        
         if(obj.create_date){
           o.create_date=obj.create_date;
         }
         
-        if(obj.age){
-          o.age=obj.age;
+        if(obj.plan_time){
+          o.plan_time=obj.plan_time;
         }
         
-        if(obj.mytext){
-          o.mytext=obj.mytext;
+        if(obj.actual_time){
+          o.actual_time=obj.actual_time;
         }
         
-        if(obj.blog){
-          o.blog=obj.blog;
-        }
-        
-        if(obj.fl){
-          o.fl=obj.fl;
-        }
-        
-        if(obj.db){
-          o.db=obj.db;
-        }
-        
-        if(obj.remarks){
-          o.remarks=obj.remarks;
+        if(obj.gap){
+          o.gap=obj.gap;
         }
         
       

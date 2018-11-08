@@ -53,18 +53,22 @@
                     <span>*表类型：</span>
                   </div>
                   <div class="input-box">
-                      <el-select @focus="adjustSelectWidth" v-model="tableData.type" style="width:99.9%;" placeholder="请选择">
-                            <el-option
-                          
-                            label="单表"
-                            value="single">
-                            </el-option>
-                            <el-option
-                          
-                            label="主表"
-                            value="main">
-                            </el-option>
-                        </el-select>
+                    <el-select @focus="adjustSelectWidth" v-model="tableData.type" style="width:99.9%;" placeholder="请选择">
+                          <el-option
+                          v-for="item in typeList"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id">
+                        </el-option>
+                          <!-- <el-option
+                          label="单表"
+                          value="single">
+                          </el-option>
+                          <el-option
+                          label="主表"
+                          value="main">
+                          </el-option> -->
+                      </el-select>
                   </div>
                 </div>
               </div>
@@ -198,6 +202,7 @@ import databasesSelecter from "./databasesSelecter.vue";
     },
     data () {
       return {
+          typeList:[],
           loading:false,
           dbModelVisible:false,
           activeName:"first",
@@ -243,6 +248,9 @@ import databasesSelecter from "./databasesSelecter.vue";
             curVal.buttons=[];
         }
         this.tableData=curVal;
+        if(this.typeList.length==0){
+          this.getGenTypeList();
+        }
       }
       // visible(curVal,oldVal){
       //   console.log(curVal);
@@ -259,6 +267,7 @@ import databasesSelecter from "./databasesSelecter.vue";
     computed:{
     },
     created () {
+      
     },
     mounted () {
       // this.loading=true;
@@ -267,6 +276,27 @@ import databasesSelecter from "./databasesSelecter.vue";
       //   },2000)
     },
     methods:{
+      getGenTypeList () {
+            this.$axios.get(
+            `${this.$baseUrl}/gen/tb-gen-type/list`,
+            {
+                params: {
+                    'pageNum': 1,
+                    'pageSize': 100,
+                    'query': {}
+                }
+            }
+            ).then(({data}) => {
+            if (data && data.success == 1) {
+                this.typeList = data.data.list
+                
+            } else {
+                this.typeList = []
+                
+            }
+            
+            })
+        },
       handleClick(){},
       selectionChange(val){
         this.multiSelect=val;

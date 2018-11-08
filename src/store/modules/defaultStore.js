@@ -69,7 +69,7 @@ const state = {
               childrens:[]
             },
             {
-              id:24,
+              id:25,
               url:"/project-ctrl",
               name:"项目总控表",
               icon:"",
@@ -129,8 +129,15 @@ const state = {
             },
             {
               id:55,
-              url:"/module",
+              url:"/gen-template",
               name:"模板管理",
+              icon:"",
+              childrens:[]
+            },
+            {
+              id:56,
+              url:"/gen-type",
+              name:"类型管理",
               icon:"",
               childrens:[]
             },

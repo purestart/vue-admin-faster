@@ -1,10 +1,10 @@
 
-const genTableService = require('../../service/{{obj.table.module_name}}/{{obj.fileSubName}}-service');
+const genTableService = require('../../service/sys/customs-service');
 const config=require("../../config/generator-config");
 
 module.exports =[
     {
-        url:"/{{obj.table.module_name}}/{{obj.fileSubName}}/info/:id",
+        url:"/sys/customs/info/:id",
         method:"get",
         function:async ctx=>{
            // const id=ctx.request.query.id;
@@ -27,7 +27,7 @@ module.exports =[
         }
     },
     {
-        url:"/{{obj.table.module_name}}/{{obj.fileSubName}}/delete",
+        url:"/sys/customs/delete",
         method:"post",
         function:async ctx=>{
             //const id=ctx.request.query.id;
@@ -82,7 +82,7 @@ module.exports =[
         }
     },
     {
-        url:"/{{obj.table.module_name}}/{{obj.fileSubName}}/create",
+        url:"/sys/customs/create",
         method:"post",
         function:async ctx=>{
             let obj = ctx.request.body;
@@ -106,7 +106,7 @@ module.exports =[
         }
     },
     {
-        url:"/{{obj.table.module_name}}/{{obj.fileSubName}}/list",
+        url:"/sys/customs/list",
         method:"get",
         function:async ctx=>{
             const pageSize=ctx.request.query.pageSize?parseInt(ctx.request.query.pageSize):10;
@@ -139,7 +139,7 @@ module.exports =[
         }
     },
     {
-        url:"/{{obj.table.module_name}}/{{obj.fileSubName}}/update",
+        url:"/sys/customs/update",
         method:"post",
         function:async ctx=>{
             let obj = ctx.request.body;

@@ -8,9 +8,13 @@ var path=require('path');
 var fs = require("fs");
 var AsyncFs= require('../util/async-fs');
 
-var xtpl = require('xtpl');
+var genTypeService=require("./gen/tb-gen-type-service");
+var genTemplateService=require("./gen/tb-gen-template-service");
 
-module.exports={
+var xtpl = require('xtpl');
+var XTemplate = require('xtemplate');
+
+var genTableService={
     
     getGenTableById:async (id)=> {
         console.log("getUserById");
@@ -169,6 +173,80 @@ module.exports={
 
     },
 
+    renderCode:async (abcpath,template,obj)=>{
+      new Promise(async (resolve, reject) => {
+
+        try {
+          source=decodeURI(template.content);
+          //console.log(source);
+          let content=new XTemplate(source).render({obj:obj});
+          console.log("返回的数据");
+          //console.log(content);
+          //
+          let fileName=obj.table.name+"-"+template.file_name;
+
+          if(template.file_name=='index.vue'){
+            fileName=obj.table.name+".vue";
+          }else if(template.file_name=='add-or-update.vue'){
+            fileName=obj.table.name+"-add-or-update.vue";
+          }
+          
+          fileName=fileName.replace(/\_/g,"-");
+          fileName=fileName.replace(obj.config.tablePrefix,"");
+          abcpath=abcpath+fileName;
+
+            await AsyncFs.writeFile(abcpath,content).then((result)=>{
+              console.log("writeFile success");
+
+              resolve();
+            }).catch((err)=>{
+                console.log(err);
+                reject(error)
+            })
+          
+        } catch (error) {
+          console.log(error);
+          reject(error)
+        }
+
+        // xtpl.renderFile(xtplPath,{
+        //   obj:obj,
+        //   columns:[{id:0},{id:1}]
+        // },async function(error,content){
+        //     if(error)
+        //     {
+        //         console.log(error);
+        //         ret.generate={
+        //           success:0,
+        //           err:error    
+        //         }
+        //         reject(error)
+        //     }
+        //     console.log(content);
+        //     let fileName=obj.table.name+".vue";
+        //     fileName=fileName.replace(/\_/g,"-");
+        //     fileName=fileName.replace(obj.config.tablePrefix,"");
+        //     abcpath=abcpath+fileName;
+        //     await AsyncFs.writeFile(abcpath,content).then((result)=>{
+        //       console.log("writeFile success");
+        //       ret.generate={
+        //         success:1,
+        //       }
+        //       resolve();
+        //     }).catch((err)=>{
+        //         console.log(err);
+        //         ret.generate={
+        //             success:0,
+        //             err:err    
+        //         }
+        //         reject(error)
+        //     })
+        //     ret.content=content;
+        // });
+
+      })
+    },
+
     generateCode:async (obj)=>{
       var dirpath=path.join(__dirname,'');
       var defpath=path.join(__dirname,'../');
@@ -192,13 +270,6 @@ module.exports={
         path:{dirpath,defpath,abcpath}
       }
 
-      await AsyncFs.makeDirs(abcpath).then((result) => {
-        console.log("makeDir success");
-      }).catch((err) => {
-        ret.success=0;
-        ret.err=err;
-      });
-
       var xtplPath=path.join(__dirname,'../xtpl/'+obj.config.list_vue);
 
       let fileSubName=obj.table.name;
@@ -206,6 +277,7 @@ module.exports={
       fileSubName=fileSubName.replace(obj.config.tablePrefix,"");
       obj.fileSubName=fileSubName;
       
+      //处理node路由
       let attrsName=obj.table.name.replace(obj.config.tablePrefix,"");
 
       //大写处理
@@ -220,228 +292,62 @@ module.exports={
         regArray.push(obj.reg.list[key]);
       })
       obj.reg.regArray=regArray;
-      obj.keyname="id";//主键设置
       
-      await new Promise((resolve, reject) => {
-        xtpl.renderFile(xtplPath,{
-          obj:obj,
-          columns:[{id:0},{id:1}]
-        },async function(error,content){
-            if(error)
-            {
-                console.log(error);
-                ret.generate={
-                  success:0,
-                  err:error    
-                }
-                reject(error)
-            }
-            console.log(content);
-            let fileName=obj.table.name+".vue";
-            fileName=fileName.replace(/\_/g,"-");
-            fileName=fileName.replace(obj.config.tablePrefix,"");
-            abcpath=abcpath+fileName;
-            await AsyncFs.writeFile(abcpath,content).then((result)=>{
-              console.log("writeFile success");
-              ret.generate={
-                success:1,
-              }
-              resolve();
-            }).catch((err)=>{
-                console.log(err);
-                ret.generate={
-                    success:0,
-                    err:err    
-                }
-                reject(error)
-            })
-            ret.content=content;
+      obj.keyname="id";//主键设置
+
+      
+      //获取类型type
+      let tableTypeId=obj.table.type;
+      let tableType_ret=await genTypeService.info(tableTypeId);
+
+      let tableType=JSON.parse(JSON.stringify(tableType_ret));
+      
+      let template_ids=JSON.parse(tableType.template);
+      let templateList=new Array;
+
+
+      // template_ids.forEach(async (temp_id)=>{
+        
+      // })
+      
+      for(let i=0;i<template_ids.length;i++){
+        let template_obj=await genTemplateService.info(template_ids[i]);
+        templateList.push(template_obj);
+      }
+      //tableType.templateList=templateList;
+
+      obj.templateList=templateList;
+
+      obj.table.tableType=tableType;
+      console.log("长度"+templateList.length);
+     //console.log(templateList[0].content);
+
+     //获取abcpath
+     for(let i=0;i<templateList.length;i++){
+       let templateObj=templateList[i];
+        abcpath=obj.config.typePath[templateObj.category]+obj.table.module_name+"\\";
+
+        await AsyncFs.makeDirs(abcpath).then((result) => {
+          console.log("makeDir success");
+        }).catch((err) => {
+          ret.success=0;
+          ret.err=err;
         });
-      })
+       
 
-      xtplPath=path.join(__dirname,'../xtpl/'+obj.config.add_or_update);
-
-      await new Promise((resolve, reject) => {
-        xtpl.renderFile(xtplPath,{
-          obj:obj,
-          columns:[{id:0},{id:1}]
-        },async function(error,content){
-            if(error)
-            {
-                console.log(error);
-                ret.generate={
-                  success:0,
-                  err:error    
-                }
-                reject(error)
+       await genTableService.renderCode(abcpath,templateList[i],obj).then(()=>{
+            ret.generate={
+              success:1
             }
-            console.log(content);
-            let fileName=obj.table.name+"-add-or-update.vue";
-            fileName=fileName.replace(/\_/g,"-");
-            fileName=fileName.replace(obj.config.tablePrefix,"");
-            abcpath=path.join(__dirname,'../../src/pages/'+obj.table.module_name+"/");
-            abcpath=abcpath+fileName;
-            await AsyncFs.writeFile(abcpath,content).then((result)=>{
-              console.log("writeFile success");
-              ret.generate={
-                success:1,
-              }
-              resolve();
-            }).catch((err)=>{
-                console.log(err);
-                ret.generate={
-                    success:0,
-                    err:err    
-                }
-                reject(error)
-            })
-            ret.content=content;
-        });
-      })
-
-
-      xtplPath=path.join(__dirname,'../xtpl/'+obj.config.schema);
-
-      await new Promise((resolve, reject) => {
-        xtpl.renderFile(xtplPath,{
-          obj:obj,
-          columns:[{id:0},{id:1}]
-        },async function(error,content){
-            if(error)
-            {
-                console.log(error);
-                ret.generate={
-                  success:0,
-                  err:error    
-                }
-                reject(error)
+        }).catch((err)=>{
+            ret.generate={
+              success:0,
+              err:err    
             }
-            console.log(content);
-            let fileName=obj.table.name+".js";
-            fileName=fileName.replace(/\_/g,"-");
-            fileName=fileName.replace(obj.config.tablePrefix,"");
-            abcpath=path.join(__dirname,'../schema/'+obj.table.module_name+"/");
-
-            await AsyncFs.makeDirs(abcpath).then((result) => {
-              console.log("makeDir success");
-            }).catch((err) => {
-              ret.success=0;
-              ret.err=err;
-            });
-            abcpath=abcpath+fileName;
-            await AsyncFs.writeFile(abcpath,content).then((result)=>{
-              console.log("writeFile success");
-              ret.generate={
-                success:1,
-              }
-              resolve();
-            }).catch((err)=>{
-                console.log(err);
-                ret.generate={
-                    success:0,
-                    err:err    
-                }
-                reject(error)
-            })
-            ret.content=content;
         });
-      })
 
-
-      xtplPath=path.join(__dirname,'../xtpl/'+obj.config.service);
-
-      await new Promise((resolve, reject) => {
-        xtpl.renderFile(xtplPath,{
-          obj:obj
-        },async function(error,content){
-            if(error)
-            {
-                console.log(error);
-                ret.generate={
-                  success:0,
-                  err:error    
-                }
-                reject(error)
-            }
-            console.log(content);
-            let fileName=obj.table.name+"-service.js";
-            fileName=fileName.replace(/\_/g,"-");
-            fileName=fileName.replace(obj.config.tablePrefix,"");
-            abcpath=path.join(__dirname,'../service/'+obj.table.module_name+"/");
-
-            await AsyncFs.makeDirs(abcpath).then((result) => {
-              console.log("makeDir success");
-            }).catch((err) => {
-              ret.success=0;
-              ret.err=err;
-            });
-            abcpath=abcpath+fileName;
-            await AsyncFs.writeFile(abcpath,content).then((result)=>{
-              console.log("writeFile success");
-              ret.generate={
-                success:1,
-              }
-              resolve();
-            }).catch((err)=>{
-                console.log(err);
-                ret.generate={
-                    success:0,
-                    err:err    
-                }
-                reject(error)
-            })
-            ret.content=content;
-        });
-      })
-
-      xtplPath=path.join(__dirname,'../xtpl/'+obj.config.controller);
-
-      await new Promise((resolve, reject) => {
-        xtpl.renderFile(xtplPath,{
-          obj:obj
-        },async function(error,content){
-            if(error)
-            {
-                console.log(error);
-                ret.generate={
-                  success:0,
-                  err:error    
-                }
-                reject(error)
-            }
-            console.log(content);
-            let fileName=obj.table.name+"-controller.js";
-            fileName=fileName.replace(/\_/g,"-");
-            fileName=fileName.replace(obj.config.tablePrefix,"");
-            abcpath=path.join(__dirname,'../router/'+obj.table.module_name+"/");
-
-            await AsyncFs.makeDirs(abcpath).then((result) => {
-              console.log("makeDir success");
-            }).catch((err) => {
-              ret.success=0;
-              ret.err=err;
-            });
-            abcpath=abcpath+fileName;
-            await AsyncFs.writeFile(abcpath,content).then((result)=>{
-              console.log("writeFile success");
-              ret.generate={
-                success:1,
-              }
-              resolve();
-            }).catch((err)=>{
-                console.log(err);
-                ret.generate={
-                    success:0,
-                    err:err    
-                }
-                reject(error)
-            })
-            ret.content=content;
-        });
-      })
-
-
-
+     }
+      
       if(ret.success==1 && ret.generate.success==1){
 
           xtplPath=path.join(__dirname,'../xtpl/'+obj.config.node_router);
@@ -515,3 +421,4 @@ module.exports={
     }
     
 }
+module.exports=genTableService;

@@ -1,7 +1,7 @@
 
 const sequelize=require('../../conmon/mysql');
 const Sequelize = require('sequelize');
-const GenTable = require('../../schema/sys/customs')(sequelize,Sequelize); // 引入user的表结构
+const GenTable = require('../../schema/gen/tb-gen-template')(sequelize,Sequelize); // 引入user的表结构
 var uuid = require('node-uuid');
 
 var path=require('path');
@@ -64,14 +64,14 @@ module.exports={
             id:uuid.v1(),
             
           name:obj.name,
-          create_date:obj.create_date,
-          age:obj.age,
-          mytext:obj.mytext,
-          blog:obj.blog,
-          fl:obj.fl,
-          db:obj.db,
+          content:obj.content,
+          create_date:Date.now(),
+          update_date:Date.now(),
           remarks:obj.remarks,
-          update_date:obj.update_date,
+          del_flag:obj.del_flag,
+          category:obj.category,
+          file_path:obj.file_path,
+          file_name:obj.file_name,
           
       })
     },
@@ -98,19 +98,19 @@ module.exports={
       
         o.name=obj.name;
         
+        o.content=obj.content;
+        
         o.create_date=obj.create_date;
         
-        o.age=obj.age;
-        
-        o.mytext=obj.mytext;
-        
-        o.blog=obj.blog;
-        
-        o.fl=obj.fl;
-        
-        o.db=obj.db;
-        
         o.remarks=obj.remarks;
+        
+        o.del_flag=obj.del_flag;
+        
+        o.category=obj.category;
+        
+        o.file_path=obj.file_path;
+        
+        o.file_name=obj.file_name;
         
       return await o.save();
 
@@ -129,32 +129,32 @@ module.exports={
           o.name=obj.name;
         }
         
+        if(obj.content){
+          o.content=obj.content;
+        }
+        
         if(obj.create_date){
           o.create_date=obj.create_date;
         }
         
-        if(obj.age){
-          o.age=obj.age;
-        }
-        
-        if(obj.mytext){
-          o.mytext=obj.mytext;
-        }
-        
-        if(obj.blog){
-          o.blog=obj.blog;
-        }
-        
-        if(obj.fl){
-          o.fl=obj.fl;
-        }
-        
-        if(obj.db){
-          o.db=obj.db;
-        }
-        
         if(obj.remarks){
           o.remarks=obj.remarks;
+        }
+        
+        if(obj.del_flag){
+          o.del_flag=obj.del_flag;
+        }
+        
+        if(obj.category){
+          o.category=obj.category;
+        }
+        
+        if(obj.file_path){
+          o.file_path=obj.file_path;
+        }
+        
+        if(obj.file_name){
+          o.file_name=obj.file_name;
         }
         
       

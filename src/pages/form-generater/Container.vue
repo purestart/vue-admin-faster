@@ -227,6 +227,7 @@ export default {
     },
     handleTest () {
       this.$refs.generateForm.getData().then(data => {
+
         this.$alert(data, '').catch(e=>{})
         this.$refs.widgetPreview.end()
       }).catch(e => {
@@ -247,6 +248,7 @@ export default {
     handleGenerateCode () {
       this.codeVisible = true
       this.htmlTemplate = generateCode(JSON.stringify(this.widgetForm))
+      
       this.$nextTick(() => {
         const editor = ace.edit('codeeditor')
         editor.session.setMode("ace/mode/html")

@@ -67,9 +67,6 @@
                 label="所在数据库"
                 >
                 </el-table-column>
-
-
-                
                 <el-table-column
                 prop="sync"
                 label="同步数据库"
@@ -161,8 +158,34 @@
     },
     mounted () {
         this.fetchGenTableList();
+        this.getGenTypeList();
     },
     methods:{
+        getGenTypeList () {
+            this.$axios.get(
+            `${this.$baseUrl}/gen/tb-gen-type/list`,
+            {
+                params: {
+                    'pageNum': 1,
+                    'pageSize': 100,
+                    'query': {}
+                }
+            }
+            ).then(({data}) => {
+            if (data && data.success == 1) {
+                let typeList = data.data.list
+                let enumObj={};
+                typeList.forEach((item)=>{
+                    enumObj[item.id]=item.name;
+                })
+                this.typeEmun=enumObj;
+            } else {
+                //this.typeList = []
+                
+            }
+            
+            })
+        },
         generatorCode(){
             console.log(this.multipleSelection);
             if(this.multipleSelection.length==0){

@@ -1,7 +1,7 @@
 
 const sequelize=require('../../conmon/mysql');
 const Sequelize = require('sequelize');
-const GenTable = require('../../schema/{{obj.table.module_name}}/{{obj.fileSubName}}')(sequelize,Sequelize); // 引入user的表结构
+const GenTable = require('../../schema/gen/tb-gen-type')(sequelize,Sequelize); // 引入user的表结构
 var uuid = require('node-uuid');
 
 var path=require('path');
@@ -45,7 +45,7 @@ module.exports={
       
       let list= await GenTable.findAll({
         where:searchParams,
-        //order: [['update_date', 'DESC']],
+        order: [['order_num', 'ASC']],
         offset: offset,
         limit: pageSize
       });
@@ -60,15 +60,16 @@ module.exports={
     },
     create:async (obj)=>{
       return await GenTable.create({
-        {{#each(obj.table.columns)~}}
-          {{#if(this.name !== obj.keyname)~}}
-          {{this.name}}:obj.{{this.name}},
-          {{else}}
-            {{#if(this.dataType !== 'int' && this.dataType !== 'integer' && !this.isAutoIncrement)~}}
-          {{this.name}}:uuid.v1(),
-            {{~/if}}
-          {{~/if}}
-        {{~/each}}
+        
+            id:uuid.v1(),
+            
+          name:obj.name,
+          create_date:Date.now(),
+          update_date:Date.now(),
+          template:obj.template,
+          remarks:obj.remarks,
+          order_num:obj.order_num
+          
       })
     },
     delete:async (id)=>{
@@ -90,12 +91,15 @@ module.exports={
       });
 
       o.update_date = Date.now();
-
-      {{#each(obj.table.columns)~}}
-        {{#if(this.name !== obj.keyname && this.name!=='update_date')~}}
-        o.{{this.name}}=obj.{{this.name}};
-        {{~/if}}
-      {{~/each}}
+      
+        o.name=obj.name;
+        
+        o.create_date=obj.create_date;
+        
+        o.template=obj.template;
+        o.remarks=obj.remarks;
+        o.order_num=obj.order_num;
+        
       return await o.save();
 
     },
@@ -108,14 +112,24 @@ module.exports={
 
       o.update_date = Date.now();
 
-      {{#each(obj.table.columns)~}}
-        {{#if(this.name !== obj.keyname && this.name!=='update_date')~}}
-        if(obj.{{this.name}}){
-          o.{{this.name}}=obj.{{this.name}};
-        }
-        {{~/if}}
-      {{~/each}}
       
+        if(obj.name){
+          o.name=obj.name;
+        }
+        
+        if(obj.create_date){
+          o.create_date=obj.create_date;
+        }
+        
+        if(obj.template){
+          o.template=obj.template;
+        }
+        if(obj.remarks){
+          o.remarks=obj.remarks;
+        }
+        if(obj.order_num){
+          o.order_num=obj.order_num;
+        }
       return await o.save();
 
     }

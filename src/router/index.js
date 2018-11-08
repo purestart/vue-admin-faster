@@ -23,6 +23,9 @@ import DealerChart from '../pages/sys/dealer-chart.vue';
 import WorkTeam from '../pages/sys/work-team.vue';
 import EnterPage from '../pages/project/enter-page.vue';
 import ProjectCtrl from "../pages/project/project-ctrl.vue";
+import GenTemplate from "../pages/gen/tb-gen-template.vue";
+import GenType from '../pages/gen/tb-gen-type.vue';
+import projectPlan from '../pages/project/tb-project-plan.vue';
 
 Vue.use(Router)
 
@@ -137,6 +140,24 @@ export default new Router({
           name:'project-ctrl',
           meta:["项目总控表"],
           component: ProjectCtrl
+        },
+        {
+          path:'/gen-template',
+          name:'gen-template',
+          meta:["模板管理"],
+          component: GenTemplate
+        },
+        {
+          path:'/gen-type',
+          name:'gen-type',
+          meta:["模板类型"],
+          component: GenType
+        },
+        {
+          path:'/project-plan',
+          name:'project-plan',
+          meta:["模板类型"],
+          component: projectPlan
         },
       ]
     },

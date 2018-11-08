@@ -1,5 +1,5 @@
 module.exports= function (sequelize, DataTypes) {
-    return sequelize.define('customs', {
+    return sequelize.define('tb_gen_type', {
       id: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,32 +18,14 @@ module.exports= function (sequelize, DataTypes) {
         primaryKey: false,
         
       },
-      age: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      update_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
         primaryKey: false,
         
       },
-      mytext: {
+      template: {
         type: DataTypes.STRING,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      blog: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      fl: {
-        type: DataTypes.FLOAT,
-        allowNull: true,
-        primaryKey: false,
-        
-      },
-      db: {
-        type: DataTypes.DOUBLE,
         allowNull: true,
         primaryKey: false,
         
@@ -54,15 +36,14 @@ module.exports= function (sequelize, DataTypes) {
         primaryKey: false,
         
       },
-      update_date: {
-        type: DataTypes.DATE,
+      order_num:{
+        type: DataTypes.INTEGER,
         allowNull: true,
         primaryKey: false,
-        
-      },
+      }
       
     }, {
-      tableName: 'customs',
+      tableName: 'tb_gen_type',
       createdAt: false, //去掉默认字段
       updatedAt: false  //去掉默认字段
     });
