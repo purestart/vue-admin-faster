@@ -83,22 +83,46 @@
             <img src="../assets/images/head.jpg" alt="">
             <span class="username">张三</span>
           </div>
+
             <el-dropdown
               trigger="hover"
-              
+             
               @command="selectSelf"
             >
-            <span class="el-dropdown-link" :style="{color:Theme1.currentTheme.headerFontColor}">
-               <i class="el-icon-setting el-icon--left" ></i>设置
-               <!-- <i class="el-icon-arrow-down el-icon--right" ></i> -->
-            </span>
+              <span  class="el-dropdown-link" :style="{color:Theme1.currentTheme.headerFontColor}">
+                <i class="el-icon-setting el-icon--left" ></i>设置
+                <!-- <i class="el-icon-arrow-down el-icon--right" ></i> -->
+              </span>
+              
               <el-dropdown-menu slot="dropdown">
-                
                 <el-dropdown-item command="桌面配置">桌面配置</el-dropdown-item>
-                <el-dropdown-item command="changetheme">切换主题</el-dropdown-item>
+                  <!-- <el-popover
+                placement="left"
+                width="100"
+                trigger="hover">
+              <div>啦啦啦</div> -->
+                <dropdown-item @mouseover="showThemeBox=true" @mouseout="showThemeBox=false" class="setting-theme-dropdown" style="position:relative" command="changetheme">
+                  切换主题
+                  <div v-if="showThemeBox" class="theme-menu-box" >
+                    <div @click="changeTheme('default')" class="theme-box"></div>
+                    <div @click="changeTheme('red-theme')" class="theme-box red-theme"></div>
+                    <div @click="changeTheme('gray-theme')" class="theme-box gray-theme"></div>
+                  </div>
+                </dropdown-item>
+                 <!-- </el-popover> -->
                 <el-dropdown-item divided command="3">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
+
+            <!-- <el-menu mode="horizontal">
+              <el-submenu index="2">
+                <template slot="title">我的工作台</template>
+                <el-menu-item index="2-1">选项1</el-menu-item>
+                <el-menu-item index="2-2">选项2</el-menu-item>
+                <el-menu-item index="2-3">选项3</el-menu-item>
+              </el-submenu>
+            </el-menu> -->
+
           </div>
         </div>
 
@@ -159,13 +183,16 @@
 
 import { mapActions, mapState } from "vuex";
 import DashboardSelector from "./dashboard/fragment/DashboardSelector.vue";
+import DropdownItem from '../components/drop-down/dropdown-item.vue';
 export default {
   components: {
-    DashboardSelector
+    DashboardSelector,
+    DropdownItem
   },
   data() {
     return {
       msgPopver: false,
+      showThemeBox:false,
       schedulePopver: false,
       noticePopver: false,
       activeName: "second",
@@ -345,16 +372,18 @@ export default {
       }
       return { x: startX, y: startY };
     },
-    ChangeTheme(a) {
-      switch (a) {
-        case "1":
-          break;
-        case "2":
-          break;
-        case "changetheme":
-          this.ThemeChange();
-          break;
-      }
+    changeTheme(a) {
+      console.log(a);
+      this.ThemeChange();
+      // switch (a) {
+      //   case "1":
+      //     break;
+      //   case "2":
+      //     break;
+      //   case "changetheme":
+      //    // this.ThemeChange();
+      //     break;
+      // }
     },
     selectSelf(a) {
       switch (a) {
@@ -365,7 +394,7 @@ export default {
           this.logout();
           break;
         case "changetheme":
-          this.ThemeChange();
+          //this.ThemeChange();
           break;
       }
     },
@@ -542,6 +571,29 @@ export default {
     .is-fixed {
       top: 15px;
       right: 30px;
+    }
+  }
+}
+.setting-theme-dropdown{
+  position:relative;
+  .theme-menu-box{
+    position:absolute;
+    left:-50px;
+    top:0px;
+    background-color:#fff;
+    color:#777;
+    padding-right:20px;
+    .theme-box{
+      width:30px;
+      height: 30px;
+      background-color:#fee;
+      cursor: pointer;
+      &.red-theme{
+        background-color:#f08519;
+      }
+      &.gray-theme{
+        background-color:#b0b0b0;
+      }
     }
   }
 }

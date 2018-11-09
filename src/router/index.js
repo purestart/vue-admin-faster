@@ -26,6 +26,8 @@ import ProjectCtrl from "../pages/project/project-ctrl.vue";
 import GenTemplate from "../pages/gen/tb-gen-template.vue";
 import GenType from '../pages/gen/tb-gen-type.vue';
 import projectPlan from '../pages/project/tb-project-plan.vue';
+import Sample from '../pages/sample/sample.vue';
+import Cate from '../pages/cate/tb-cate.vue';
 
 Vue.use(Router)
 
@@ -158,6 +160,18 @@ export default new Router({
           name:'project-plan',
           meta:["模板类型"],
           component: projectPlan
+        },
+        {
+          path:'/sample',
+          name:'sample',
+          meta:["模板类型"],
+          component: Sample
+        },
+        {
+          path:'/cate',
+          name:'cate',
+          meta:["分类管理"],
+          component: Cate
         },
       ]
     },

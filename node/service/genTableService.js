@@ -208,42 +208,6 @@ var genTableService={
           console.log(error);
           reject(error)
         }
-
-        // xtpl.renderFile(xtplPath,{
-        //   obj:obj,
-        //   columns:[{id:0},{id:1}]
-        // },async function(error,content){
-        //     if(error)
-        //     {
-        //         console.log(error);
-        //         ret.generate={
-        //           success:0,
-        //           err:error    
-        //         }
-        //         reject(error)
-        //     }
-        //     console.log(content);
-        //     let fileName=obj.table.name+".vue";
-        //     fileName=fileName.replace(/\_/g,"-");
-        //     fileName=fileName.replace(obj.config.tablePrefix,"");
-        //     abcpath=abcpath+fileName;
-        //     await AsyncFs.writeFile(abcpath,content).then((result)=>{
-        //       console.log("writeFile success");
-        //       ret.generate={
-        //         success:1,
-        //       }
-        //       resolve();
-        //     }).catch((err)=>{
-        //         console.log(err);
-        //         ret.generate={
-        //             success:0,
-        //             err:err    
-        //         }
-        //         reject(error)
-        //     })
-        //     ret.content=content;
-        // });
-
       })
     },
 

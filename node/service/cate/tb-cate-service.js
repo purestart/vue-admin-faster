@@ -1,7 +1,7 @@
 
 const sequelize=require('../../conmon/mysql');
 const Sequelize = require('sequelize');
-const GenTable = require('../../schema/dept/tb-depts')(sequelize,Sequelize); // 引入user的表结构
+const GenTable = require('../../schema/cate/tb-cate-schema')(sequelize,Sequelize); // 引入user的表结构
 var uuid = require('node-uuid');
 
 var path=require('path');
@@ -27,42 +27,41 @@ var Service={
             }
           })
     },
-    nav:async()=>{
-      let list=await Service.list(1000,1,{});
+    nav:async(searchParams)=>{
+      let retObj=await Service.list(1000,1,searchParams);
+      let list=retObj.list;
       let result=await Service.getListByParentId(list,0);
-
       return result;
     },
     getListByParentId:async(list,parent_id)=>{
       let ret=[];
-      
-      //await list.forEach(async currentItem => {
-      for(let i=0;i<list.length;i++){
-        let currentItem=list[i];
-        if(currentItem.parent_id==parent_id){
-          let children=await Service.getListByParentId(list,currentItem.id);
-          console.log("------children-----"+currentItem.id+"==="+JSON.stringify(children));
-          //currentItem.children=children;
-          let item={
-            id:currentItem.id,
-            parent_id:currentItem.parent_id,
-            name:currentItem.name,
-            order_num:currentItem.order_num,
-            del_flag:currentItem.del_flag,
-            children:children
+      if(list && list.length>0){
+        //await list.forEach(async currentItem => {
+        for(let i=0;i<list.length;i++){
+          let currentItem=list[i];
+          if(currentItem.parent_id==parent_id){
+            let children=await Service.getListByParentId(list,currentItem.id);
+            console.log("------children-----"+currentItem.id+"==="+JSON.stringify(children));
+            //currentItem.children=children;
+            let item={
+              id:currentItem.id,
+              name:currentItem.name,
+              parent_id:currentItem.parent_id,
+              order_num:currentItem.order_num,
+              remarks:currentItem.remarks,
+              
+              children:children
+            }
+          // console.log("====currentItem===="+JSON.stringify(currentItem));
+            ret.push(item);
           }
-         // console.log("====currentItem===="+JSON.stringify(currentItem));
-          ret.push(item);
-
         }
       }
-
-
      // })
       //console.log("=====ret====="+JSON.stringify(ret));
       return ret;
     },
-    list:async (pageSize=10,pageNum=1,searchParams)=>{
+    list:async (pageSize=10,pageNum,searchParams)=>{
 
       let total=0;
       total=await GenTable.count({where : searchParams}, {logging : false});
@@ -91,14 +90,16 @@ var Service={
         list,
         total
       }
-      return list;
+      return result;
     },
     create:async (obj)=>{
       return await GenTable.create({
-          parent_id:obj.parent_id,
+        
+            
           name:obj.name,
+          parent_id:obj.parent_id,
           order_num:obj.order_num,
-          del_flag:obj.del_flag,
+          remarks:obj.remarks,
           
       })
     },
@@ -120,15 +121,16 @@ var Service={
           }
       });
 
-     // o.update_date = Date.now();
+      o.update_date = Date.now();
+
       
-        o.parent_id=obj.parent_id+"";
-        
         o.name=obj.name;
+        
+        o.parent_id=obj.parent_id;
         
         o.order_num=obj.order_num;
         
-        o.del_flag=obj.del_flag;
+        o.remarks=obj.remarks;
         
       return await o.save();
 
@@ -143,20 +145,20 @@ var Service={
       o.update_date = Date.now();
 
       
-        if(obj.parent_id){
-          o.parent_id=obj.parent_id;
-        }
-        
         if(obj.name){
           o.name=obj.name;
+        }
+        
+        if(obj.parent_id){
+          o.parent_id=obj.parent_id;
         }
         
         if(obj.order_num){
           o.order_num=obj.order_num;
         }
         
-        if(obj.del_flag){
-          o.del_flag=obj.del_flag;
+        if(obj.remarks){
+          o.remarks=obj.remarks;
         }
         
       
@@ -165,5 +167,4 @@ var Service={
     }
     
 }
-
 module.exports=Service;

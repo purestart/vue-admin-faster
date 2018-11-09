@@ -18,6 +18,10 @@ const gen_type_controller=require('./gen/tb-gen-type-controller');
 
 const project_plan_controller=require('./project/tb-project-plan-controller');
 
+const sample_controller=require('./sample/sample-controller');
+
+const cate_controller=require('./cate/tb-cate-controller');
+
 module.exports={
     bdControllers,
     genTableController,
@@ -30,5 +34,7 @@ module.exports={
     gen_template_controller,
     gen_type_controller,
     project_plan_controller,
+    sample_controller,
+    cate_controller,
     
 }

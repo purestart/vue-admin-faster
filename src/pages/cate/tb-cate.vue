@@ -1,6 +1,6 @@
 
 <template>
-  <div class="page-gen--list">
+  <div class="page-cate--list">
 
     <div v-if="advanceSearchVisible" class="item-editer">
         <el-card>
@@ -24,30 +24,46 @@
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
 
       <el-form-item>
-        <el-input size="small"  v-model="dataForm.name" placeholder="模板名称" clearable></el-input>
+        <el-input size="small"  v-model="dataForm.name" placeholder="分类名称" clearable></el-input>
       </el-form-item>
   
       
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:query')">
+      <el-form-item v-if="$hasPermission('cate:tb-cate:query')">
           <el-button size="small" @click="queryForm()">查询</el-button>
       </el-form-item>
         
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:save')">
+      <el-form-item v-if="$hasPermission('cate:tb-cate:save')">
           <el-button size="small"  type="primary" @click="addOrUpdateHandle()">新增</el-button>
       </el-form-item>
          
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:delete')">
+      <el-form-item v-if="$hasPermission('cate:tb-cate:delete')">
           <el-button size="small"  type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
          
+      <el-form-item v-if="$hasPermission('cate:tb-cate:import')">
+        <el-button size="small"  type="info" @click="exportHandle()">导入</el-button>
+      </el-form-item>
+           
+      <el-form-item v-if="$hasPermission('cate:tb-cate:export')">
+        <el-button size="small" type="success" @click="exportHandle()">导出</el-button>
+      </el-form-item>
+        
     </el-form>
-    <el-table
+    <!-- <el-table
       :data="dataList"
       border
       size="small"
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
-      style="width: 100%;">
+      style="width: 100%;"> -->
+      <tree-table
+      :data="dataList" 
+      :evalFunc="func"
+      :evalArgs="args"
+      :typeName="typeName"
+      @selectionChange="selectionChangeHandle"
+      :expandAll="expandAll" >
+
       <el-table-column
         type="selection"
         header-align="center"
@@ -59,18 +75,14 @@
         prop="name"
         header-align="center"
         align="center"
-        label="模板名称">
+        label="分类名称">
       </el-table-column>
 
       <el-table-column
+        prop="order_num"
         header-align="center"
         align="center"
-        label="创建日期">
-        <template slot-scope="scope">
-            <div>
-                {{scope.row.update_date | dateformat}}
-            </div>
-        </template>
+        label="排序">
       </el-table-column>
 
       <el-table-column
@@ -81,13 +93,6 @@
       </el-table-column>
 
       <el-table-column
-        prop="category"
-        header-align="center"
-        align="center"
-        label="分类">
-      </el-table-column>
-
-      <el-table-column
         fixed="right"
         header-align="center"
         align="center"
@@ -95,14 +100,15 @@
         label="操作">
         <template slot-scope="scope">
           
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('gen:tb-gen-template:edit')">修改</el-button>
+          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('cate:tb-cate:edit')">修改</el-button>
               
           
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('gen:tb-gen-template:delete')">删除</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('cate:tb-cate:delete')">删除</el-button>
               
         </template>
       </el-table-column>
-    </el-table>
+    </tree-table>
+    <!-- </el-table> -->
     <div class="pagination-wraper">
     <el-pagination
       @size-change="sizeChangeHandle"
@@ -120,7 +126,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './tb-gen-template-add-or-update'
+  import AddOrUpdate from './tb-cate-add-or-update';
+  import treeTable from '@/components/TreeTable'
+  import treeToArray from '@/components/TreeTable/eval.js'
   export default {
     data () {
       return {
@@ -136,11 +144,16 @@
         dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false,
-        advanceSearchVisible:false
+        advanceSearchVisible:false,
+        func: treeToArray,
+        expandAll: false,
+        typeName:"分类",
+        args:null,
       }
     },
     components: {
-      AddOrUpdate
+      AddOrUpdate,
+      treeTable
     },
     activated () {
       this.getDataList()
@@ -158,7 +171,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$axios.get(
-          `${this.$baseUrl}/gen/tb-gen-template/list`,
+          `${this.$baseUrl}/cate/tb-cate/nav`,
           {
               params: {
                   'pageNum': this.pageIndex,
@@ -168,11 +181,11 @@
           }
         ).then(({data}) => {
           if (data && data.success == 1) {
-            this.dataList = data.data.list
-            this.totalPage = data.data.total
+            this.dataList = data.data
+            
           } else {
             this.dataList = []
-            this.totalPage = 0
+            
           }
           this.dataListLoading = false
         })
@@ -211,7 +224,7 @@
           type: 'warning'
         }).then(() => {
           this.$axios.post(
-              `${this.$baseUrl}/gen/tb-gen-template/delete`,
+              `${this.$baseUrl}/cate/tb-cate/delete`,
                {ids}
            ).then(({data}) => {
             if (data && data.success === 1) {
@@ -239,7 +252,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .page-gen--list{
+  .page-cate--list{
     margin: 16px;
     padding: 16px;
     background-color: #ffffff;

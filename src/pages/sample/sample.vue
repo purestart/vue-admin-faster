@@ -1,6 +1,6 @@
 
 <template>
-  <div class="page-gen--list">
+  <div class="page-sample--list">
 
     <div v-if="advanceSearchVisible" class="item-editer">
         <el-card>
@@ -8,6 +8,23 @@
                 <div class="input-box">
                     <div class="item-row">
                         
+                          <div class="item">
+                            <span class="label">名称</span>
+                            <el-input class="item-input" size="small" v-model="dataForm.name" placeholder="名称" clearable></el-input>
+                          </div>
+                          
+                        <div class="item">
+                            <span class="label">日期</span>
+                            <!-- <el-input class="item-input"  size="small" /> -->
+                            <el-date-picker
+                            class="item-input" size="small"
+                              type="datetime"
+                              v-model="dataForm.create_date"
+                              placeholder="日期"
+                            >
+                            </el-date-picker>
+                        </div>
+                          
                     </div>
                 </div>
                 <div class="submit-box">
@@ -24,21 +41,33 @@
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
 
       <el-form-item>
-        <el-input size="small"  v-model="dataForm.name" placeholder="模板名称" clearable></el-input>
+        <el-input size="small"  v-model="dataForm.name" placeholder="名称" clearable></el-input>
       </el-form-item>
   
       
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:query')">
+      <el-form-item v-if="$hasPermission('sample:sample:query')">
           <el-button size="small" @click="queryForm()">查询</el-button>
       </el-form-item>
         
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:save')">
+      <el-form-item v-if="$hasPermission('sample:sample:save')">
           <el-button size="small"  type="primary" @click="addOrUpdateHandle()">新增</el-button>
       </el-form-item>
          
-      <el-form-item v-if="$hasPermission('gen:tb-gen-template:delete')">
+      <el-form-item v-if="$hasPermission('sample:sample:delete')">
           <el-button size="small"  type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
+         
+      <el-form-item v-if="$hasPermission('sample:sample:import')">
+        <el-button size="small"  type="info" @click="exportHandle()">导入</el-button>
+      </el-form-item>
+           
+      <el-form-item v-if="$hasPermission('sample:sample:export')">
+        <el-button size="small" type="success" @click="exportHandle()">导出</el-button>
+      </el-form-item>
+        
+      <el-form-item  v-if="$hasPermission('sample:sample:query')"  style="float:right">
+        <el-button icon="el-icon-search" @click="advanceSearchVisible=!advanceSearchVisible" size="small" class="pop_btn">高级查询</el-button>
+       </el-form-item>
          
     </el-form>
     <el-table
@@ -59,7 +88,7 @@
         prop="name"
         header-align="center"
         align="center"
-        label="模板名称">
+        label="名称">
       </el-table-column>
 
       <el-table-column
@@ -68,7 +97,7 @@
         label="创建日期">
         <template slot-scope="scope">
             <div>
-                {{scope.row.update_date | dateformat}}
+                {{scope.row.create_date | dateformat}}
             </div>
         </template>
       </el-table-column>
@@ -81,13 +110,6 @@
       </el-table-column>
 
       <el-table-column
-        prop="category"
-        header-align="center"
-        align="center"
-        label="分类">
-      </el-table-column>
-
-      <el-table-column
         fixed="right"
         header-align="center"
         align="center"
@@ -95,10 +117,10 @@
         label="操作">
         <template slot-scope="scope">
           
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('gen:tb-gen-template:edit')">修改</el-button>
+          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('sample:sample:edit')">修改</el-button>
               
           
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('gen:tb-gen-template:delete')">删除</el-button>
+          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('sample:sample:delete')">删除</el-button>
               
         </template>
       </el-table-column>
@@ -120,7 +142,7 @@
 </template>
 
 <script>
-  import AddOrUpdate from './tb-gen-template-add-or-update'
+  import AddOrUpdate from './sample-add-or-update'
   export default {
     data () {
       return {
@@ -158,7 +180,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$axios.get(
-          `${this.$baseUrl}/gen/tb-gen-template/list`,
+          `${this.$baseUrl}/sample/sample/list`,
           {
               params: {
                   'pageNum': this.pageIndex,
@@ -211,7 +233,7 @@
           type: 'warning'
         }).then(() => {
           this.$axios.post(
-              `${this.$baseUrl}/gen/tb-gen-template/delete`,
+              `${this.$baseUrl}/sample/sample/delete`,
                {ids}
            ).then(({data}) => {
             if (data && data.success === 1) {
@@ -239,7 +261,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .page-gen--list{
+  .page-sample--list{
     margin: 16px;
     padding: 16px;
     background-color: #ffffff;
