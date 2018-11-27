@@ -5,9 +5,8 @@ import userApi from '../../api/demo'
 
 const state = {
   msg: "vuex data",
-  header: '',
   permissions:["sys:user:delete","sys:user:export"],
-  Theme1:{
+  Theme:{
     yellowTheme:{
       baseColor:"rgba(255,209,73,1)",//主题基础色
       className:"yellowTheme",
@@ -16,6 +15,17 @@ const state = {
       navTextColor:"#222222",//菜单字体颜色
       navActiveTextColor:"#ED8113",//菜单选中字体颜色
       headerFontColor:"#3C3C3C",
+      bacgroundImage:null,
+    },
+    grayTheme:{
+      name:"灰色主题",
+      baseColor:"rgba(0,0,0,0.4)",//主题基础色
+      className:"grayTheme",
+      navBgColor:"rgba(0,0,0,0.4)",//菜单背景颜色
+      navTextColor:"#fff",//菜单字体颜色
+      navActiveTextColor:"#1e90ff",//菜单选中字体颜色
+      headerFontColor:"#ffffff",
+      bacgroundImage:"/static/images/bg1.jpg",
     },
     blueTheme:{
       name:"深蓝色主题",
@@ -26,6 +36,7 @@ const state = {
       navTextColor:"#fff",//菜单字体颜色
       navActiveTextColor:"#1e90ff",//菜单选中字体颜色
       headerFontColor:"#ffffff",
+      bacgroundImage:null,
     },
     orangeTheme:{
       name:"橘黄色主题",
@@ -35,6 +46,7 @@ const state = {
       navBgColor:"#ffffff",//菜单背景颜色
       navTextColor:"#222222",//菜单字体颜色
       navActiveTextColor:"rgba(240, 133, 25, 1)",//菜单选中字体颜色
+      bacgroundImage:null,
     },
     currentTheme:{
       name:"橘黄色主题",
@@ -44,6 +56,7 @@ const state = {
       navBgColor:"#ffffff",//菜单背景颜色
       navTextColor:"#222222",//菜单字体颜色
       navActiveTextColor:"rgba(240, 133, 25, 1)",//菜单选中字体颜色
+      bacgroundImage:null,
     },
   },
   menus:
@@ -148,13 +161,13 @@ const state = {
               icon:"",
               childrens:[]
             },
-            {
-              id:53,
-              url:"/form-gen",
-              name:"表单生成器",
-              icon:"",
-              childrens:[]
-            },
+            // {
+            //   id:53,
+            //   url:"/form-gen",
+            //   name:"表单生成器",
+            //   icon:"",
+            //   childrens:[]
+            // },
             {
               id:52,
               url:"/pro-material",
@@ -164,21 +177,21 @@ const state = {
             },
           ]
         },
-        {
-          id:4,
-          url:"",
-          name:"我的应用",
-          icon:"el-icon-menu",
-          childrens:[
-              {
-              id:41,
-              url:"/profile",
-              name:"个人信息",
-              icon:"",
-              childrens:[]
-            },
-          ]
-        },
+        // {
+        //   id:4,
+        //   url:"",
+        //   name:"我的应用",
+        //   icon:"el-icon-menu",
+        //   childrens:[
+        //       {
+        //       id:41,
+        //       url:"/profile",
+        //       name:"个人信息",
+        //       icon:"",
+        //       childrens:[]
+        //     },
+        //   ]
+        // },
          {
           id:3,
           url:"",
@@ -194,21 +207,21 @@ const state = {
               },
                   {
                   id:32,
-                  url:"/roles",
+                  url:"/role",
                   name:"角色管理",
                   icon:"fa fa-home",
                   childrens:[]
               },
               {
                 id:33,
-                url:"/groups",
+                url:"/dept",
                 name:"部门管理",
                 icon:"fa fa-home",
                 childrens:[]
             },
               {
                 id:34,
-                url:"/users",
+                url:"/user",
                 name:"人员管理",
                 icon:"fa fa-home",
                 childrens:[]
@@ -232,49 +245,31 @@ const state = {
       ],
     selectedMenu: {},
     mainMenu: [],
-    editData:{},
-    tableData: [],
 }
 const mutations = {
   updateMsg(state, payload) {
     state.msg = payload;
   },
-  loadHeader(state, payload) {
-    if (payload) {
-      state.header = payload;
-      window.sessionStorage.setItem('header', payload)
-    } else {
-      state.header = '菜单管理'
-      if (window.sessionStorage.getItem('header')) {
-        state.header = window.sessionStorage.getItem('header')
-      }
-    }
-  },
-  theme(state, payload) {
-   // state.Theme.yellowheader = !state.Theme.yellowheader
-   // state.Theme.blueheader = !state.Theme.blueheader
-   // window.localStorage.setItem('Theme', JSON.stringify(state.Theme))
+  changeTheme(state, payload) {
+    console.log("payload");
+    console.log(payload);
 
-    if(state.Theme1.currentTheme.className=='orangeTheme'){
-      state.Theme1.currentTheme=state.Theme1.blueTheme;
-    }else{
-      state.Theme1.currentTheme=state.Theme1.orangeTheme;
-    }
-    
-    
-    window.localStorage.setItem('Theme1', JSON.stringify(state.Theme1))
+    // if(state.Theme.currentTheme.className=='orangeTheme'){
+    //   state.Theme.currentTheme=state.Theme.blueTheme;
+    // }else{
+    //   state.Theme.currentTheme=state.Theme.orangeTheme;
+    // }
+    state.Theme.currentTheme=payload;
+    window.localStorage.setItem('Theme', JSON.stringify(state.Theme))
   },
   detheme(state, payload) {
    // let tmpTheme = JSON.parse(window.localStorage.getItem('Theme'));
-    let tmpTheme1 = JSON.parse(window.localStorage.getItem('Theme1'));
-    if (tmpTheme1) {
-      //state.Theme1 = JSON.parse(window.localStorage.getItem('Theme1'))
+    let tmpTheme = JSON.parse(window.localStorage.getItem('Theme'));
+    if (tmpTheme) {
+      state.Theme = JSON.parse(window.localStorage.getItem('Theme'))
     }
   },
-  EditSelect(state, payload) {
-    console.log(payload)
-    state.editData = payload
-  }
+
 }
 const actions = {
     fetchCourse({commit, dispatch}, payload = {noShare: false}) {
@@ -296,18 +291,13 @@ const actions = {
         // dispatch('playAudio', initSecIndex);
     
       },
-  ThemeChange({commit, dispatch}, payload = {noShare: false}){
-    commit("theme")
+  changeTheme({commit, dispatch}, payload){
+    commit("changeTheme",payload)
   },
   deftheme({commit, dispatch}, payload){
     commit("detheme",payload)
   },
-  LoadHeader({commit, dispatch}, payload){
-    commit("loadHeader",payload)
-  },
-  DataEdit({commit, dispatch}, payload){
-    commit("EditSelect",payload)
-  },
+
 }
 
 export default {

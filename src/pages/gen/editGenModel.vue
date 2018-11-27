@@ -1,6 +1,6 @@
 /*
 * author:詹陈龙
-* description: 角色权限弹出框
+* description: 弹出框
 * update:2018-08-07
 */
 <template>
@@ -15,15 +15,7 @@
         <edit-model :width="1200" :height="700" @submit="sumitForm()" title="我的标题" :modelVisible="visible" @close="beforeClose">
         
         <div class="dialog-container">
-            <!-- <el-tree
-            v-loading="loading"
-            :data="menusData"
-            show-checkbox
-            node-key="id"
-            :default-expanded-keys="[2, 3]"
-            :default-checked-keys="[5]"
-            :props="defaultProps">
-            </el-tree> -->
+
             <div style="border-top:1px solid #e4e4e4;" class="info-box">
               <div class="left-wraper">
                 <div class="form-item">
@@ -169,11 +161,7 @@
         </span>
         </el-dialog> -->
 
-
-
           <databasesSelecter :modelVisible="dbModelVisible" @close="dbModelVisible=false" @submit="submitDbSelectForm"></databasesSelecter>
-
-
 
     </div>
 </template>
@@ -340,9 +328,29 @@ import databasesSelecter from "./databasesSelecter.vue";
         console.log("selectDbInfo");
         this.dbModelVisible=true;
       },
+      getPropName(name){
+        let arr=name.split('_');
+        
+        if(arr.length>1){
+          let propName=arr[0];
+          for(let i=1;i<arr.length;i++){
+            let tempStr=arr[i];
+            propName=propName+tempStr.charAt(0).toUpperCase() + tempStr.slice(1);
+          }
+          return propName;
+
+        }else{
+          return name;
+        }
+      },
       sumitForm(){
         this.tableData.buttons=JSON.stringify(this.tableData.editButtons);
         console.log(this.tableData);
+        this.tableData.editAttrs.forEach((item)=>{
+          if(!item.propName){
+            item.propName=this.getPropName(item.name);
+          }
+        })
         this.tableData.attrs=JSON.stringify(this.tableData.editAttrs);
         if(this.tableData.id){
           genTableApi.updateGenTable((res)=>{

@@ -68,7 +68,7 @@
 <script>
   import { treeDataTranslate } from '@/utils'
   // import Icon from '@/icons'
-  import { iconList } from "../../config";
+  import { iconList } from "../../../config";
   export default {
     data () {
       var validateUrl = (rule, value, callback) => {

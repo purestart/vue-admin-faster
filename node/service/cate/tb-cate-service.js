@@ -20,34 +20,27 @@ var Service={
           }
         })
     },
-    infoByName:async (username)=>{
-        return await GenTable.findOne({
-            where: {
-              username
-            }
-          })
-    },
     nav:async(searchParams)=>{
       let retObj=await Service.list(1000,1,searchParams);
       let list=retObj.list;
       let result=await Service.getListByParentId(list,0);
       return result;
     },
-    getListByParentId:async(list,parent_id)=>{
+    getListByParentId:async(list,parentId)=>{
       let ret=[];
       if(list && list.length>0){
         //await list.forEach(async currentItem => {
         for(let i=0;i<list.length;i++){
           let currentItem=list[i];
-          if(currentItem.parent_id==parent_id){
+          if(currentItem.parentId==parentId){
             let children=await Service.getListByParentId(list,currentItem.id);
             console.log("------children-----"+currentItem.id+"==="+JSON.stringify(children));
             //currentItem.children=children;
             let item={
               id:currentItem.id,
               name:currentItem.name,
-              parent_id:currentItem.parent_id,
-              order_num:currentItem.order_num,
+              parentId:currentItem.parentId,
+              orderNum:currentItem.orderNum,
               remarks:currentItem.remarks,
               
               children:children
@@ -97,8 +90,8 @@ var Service={
         
             
           name:obj.name,
-          parent_id:obj.parent_id,
-          order_num:obj.order_num,
+          parentId:obj.parentId,
+          orderNum:obj.orderNum,
           remarks:obj.remarks,
           
       })
@@ -121,14 +114,14 @@ var Service={
           }
       });
 
-      o.update_date = Date.now();
-
       
+        
+        
         o.name=obj.name;
         
-        o.parent_id=obj.parent_id;
+        o.parentId=obj.parentId;
         
-        o.order_num=obj.order_num;
+        o.orderNum=obj.orderNum;
         
         o.remarks=obj.remarks;
         
@@ -142,19 +135,19 @@ var Service={
           }
       });
 
-      o.update_date = Date.now();
+      o.updateDate = Date.now();
 
       
         if(obj.name){
           o.name=obj.name;
         }
         
-        if(obj.parent_id){
-          o.parent_id=obj.parent_id;
+        if(obj.parentId){
+          o.parentId=obj.parentId;
         }
         
-        if(obj.order_num){
-          o.order_num=obj.order_num;
+        if(obj.orderNum){
+          o.orderNum=obj.orderNum;
         }
         
         if(obj.remarks){

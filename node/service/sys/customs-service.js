@@ -1,7 +1,7 @@
 
 const sequelize=require('../../conmon/mysql');
 const Sequelize = require('sequelize');
-const GenTable = require('../../schema/sys/customs')(sequelize,Sequelize); // 引入user的表结构
+const GenTable = require('../../schema/sys/customs-schema')(sequelize,Sequelize); // 引入user的表结构
 var uuid = require('node-uuid');
 
 var path=require('path');
@@ -20,17 +20,13 @@ module.exports={
           }
         })
     },
-    infoByName:async (username)=>{
-        return await GenTable.findOne({
-            where: {
-              username
-            }
-          })
-    },
     list:async (pageSize=10,pageNum,searchParams)=>{
 
       let total=0;
       total=await GenTable.count({where : searchParams}, {logging : false});
+
+
+
       console.log(total);
       if(total<1){
         return [];
@@ -64,14 +60,14 @@ module.exports={
             id:uuid.v1(),
             
           name:obj.name,
-          create_date:obj.create_date,
+          createDate:obj.createDate,
           age:obj.age,
           mytext:obj.mytext,
           blog:obj.blog,
           fl:obj.fl,
           db:obj.db,
           remarks:obj.remarks,
-          update_date:obj.update_date,
+          updateDate:obj.updateDate,
           
       })
     },
@@ -93,12 +89,12 @@ module.exports={
           }
       });
 
-      o.update_date = Date.now();
-
       
+        o.updateDate = Date.now();
+        
         o.name=obj.name;
         
-        o.create_date=obj.create_date;
+        o.createDate=obj.createDate;
         
         o.age=obj.age;
         
@@ -111,6 +107,8 @@ module.exports={
         o.db=obj.db;
         
         o.remarks=obj.remarks;
+        
+        o.updateDate = Date.now();
         
       return await o.save();
 
@@ -129,8 +127,8 @@ module.exports={
           o.name=obj.name;
         }
         
-        if(obj.create_date){
-          o.create_date=obj.create_date;
+        if(obj.createDate){
+          o.createDate=obj.createDate;
         }
         
         if(obj.age){

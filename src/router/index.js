@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../pages/index.vue'
-import Menus from "../pages/menus/menus.vue";
+import Menus from "../pages/sys/menus/menus.vue";
 import Login from "../pages/login.vue";
 import NotFound from "../pages/404.vue";
 import Home from '../pages/dashboard/dynamic-layout.vue';
-import Roles from "../pages/roles/role.vue";
-import Groups from '../pages/dept/tb-depts.vue';
-import Users from '../pages/users/user.vue';
+import Role from "../pages/sys/role/role.vue";
+import Dept from '../pages/sys/dept/tb-depts.vue';
+import User from '../pages/sys/user/user.vue';
 import Form from '../pages/form/form.vue';
 import ProjectInfo from '../pages/project/project-info.vue';
 import PreProject from '../pages/project/pre-project.vue';
@@ -52,21 +52,21 @@ export default new Router({
           component: Home
         },
         {
-          path:'/roles',
-          name:'roles',
+          path:'/role',
+          name:'role',
           meta:["角色"],
-          component: Roles
+          component: Role
         },
         {
-          path:'/groups',
-          name:'groups',
-          component: Groups
+          path:'/dept',
+          name:'dept',
+          component: Dept
         },
         {
-          path:'/users',
-          name:'users',
+          path:'/user',
+          name:'user',
           meta:["用户"],
-          component: Users
+          component: User
         },
         {
           path:'/form',

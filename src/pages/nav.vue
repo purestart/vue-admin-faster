@@ -1,21 +1,21 @@
 <template>
-  <el-row :style="'background-color:'+Theme1.currentTheme.navBgColor" :class="Theme1.currentTheme.className" class="Ynav">
+  <el-row :style="'background-color:'+Theme.currentTheme.navBgColor" :class="Theme.currentTheme.className" class="Ynav">
       <h3 class="sys-name" v-if="lips">系统管理</h3>
       <h3 class="sys-name" v-else></h3>
     <el-menu
       :default-active="$route.path"
       class="el-menu-vertical-demo menu"
-      @select="getHeader"
+      
       :collapse="isCollapse"
-      :background-color="Theme1.currentTheme.navBgColor"
-      :text-color="Theme1.currentTheme.navTextColor"
-      :active-text-color="Theme1.currentTheme.navActiveTextColor"
+      :background-color="Theme.currentTheme.navBgColor"
+      :text-color="Theme.currentTheme.navTextColor"
+      :active-text-color="Theme.currentTheme.navActiveTextColor"
       :router="true"
     >
       <template v-if="true" v-for="item in menus">
                 <el-menu-item v-if="!item.childrens || item.childrens.length==0" :key="item.id" :index="item.url" class="spec_menu_item"><i :class="item.icon"></i><span slot="title">{{item.name}}</span></el-menu-item>
                 <!-- :popper-class="Theme.yellowheader? 'yellow-pover-class':'blue-pover-class'" -->
-                <el-submenu :popper-class="Theme1.currentTheme.className" v-else-if="item.childrens || item.childrens.length>0" :index="item.id+'_'"  :key="item.id" >
+                <el-submenu :popper-class="Theme.currentTheme.className" v-else-if="item.childrens || item.childrens.length>0" :index="item.id+'_'"  :key="item.id" >
                   <template slot="title">
                     <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
                   </template>
@@ -88,15 +88,14 @@
       height: 35px;
       line-height: 35px;
       list-style: disc inside ;
-      background:#ffffff !important;
+      // background:#ffffff ;
       &:hover{
-        background: rgba(253,242,210,1) !important;
+        background: rgba(253,242,210,1) ;
       }
     }
 
     .iconfont{
      
-    speak: none;
     font-style: normal;
     font-weight: 400;
     font-variant: normal;
@@ -160,26 +159,20 @@
       }
     },
     mounted(){
-      console.log(this.Theme1.currentTheme);
+      console.log(this.Theme.currentTheme);
     },
     computed:{
       ...mapState({
       msg:state=>state.default.msg,
       
       menus:state=>state.default.menus,
-      Theme1:state=>state.default.Theme1,
+      Theme:state=>state.default.Theme,
     }),
     },
     props: ['isCollapse','lips'],
     methods: {
-      ...mapActions(["LoadHeader"]),
+      // ...mapActions([""]),
 
-      getHeader(key, keyPath,e){
-        // this.Openactive=key
-        // const TopHeader=$(e.$el).text()
-        // this.LoadHeader(TopHeader)
-        // window.sessionStorage.setItem('Openactive',key)
-      }
     }
   }
 </script>

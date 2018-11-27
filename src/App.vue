@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div  id="app">
     
     <router-view/>
   </div>
@@ -17,6 +17,8 @@ export default {
   width: 100%;
   height: 100%;
   min-width: 1200px;
+
+  background: #f0f2f5;
 }
 ul,ol{
   list-style:none;

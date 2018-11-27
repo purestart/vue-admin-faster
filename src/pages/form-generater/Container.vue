@@ -127,9 +127,6 @@
     </cus-dialog>
   </el-container>
 </div>
-
-
-
   
 </template>
 
@@ -238,10 +235,8 @@ export default {
       this.jsonVisible = true
       this.jsonTemplate = this.widgetForm
       this.$nextTick(() => {
-
         const editor = ace.edit('jsoneditor')
         editor.session.setMode("ace/mode/json")
-
         //const btnCopy = new Clipboard('#copybtn')
       })
     },
@@ -259,7 +254,7 @@ export default {
     widgetForm: {
       deep: true,
       handler: function (val) {
-        console.log(this.$refs.widgetForm)
+       // console.log(this.$refs.widgetForm)
       }
     }
   }

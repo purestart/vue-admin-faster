@@ -154,7 +154,7 @@
       getDeptList () {
 
         return new Promise((resolve, reject) => {
-          let data=require("../roles/dept-list.json");
+          let data=require("../role/dept-list.json");
           this.deptList = treeDataTranslate(data || [], 'deptId')
           resolve();
         })
@@ -167,7 +167,7 @@
       // 获取角色列表
       getRoleList () {
         return new Promise((resolve, reject) => {
-          let data=require("../roles/role-list.json");
+          let data=require("../role/role-list.json");
                     if (data && data.code === 0) {
             this.roleList = data.data || [];
             resolve();

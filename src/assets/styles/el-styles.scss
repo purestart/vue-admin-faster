@@ -118,4 +118,16 @@
 .el-table--mini, .el-table--small, .el-table__expand-icon {
     font-size: 14px;
 }
+
+.el-menu-item {
+
+  transition: none !important;
+
+}
+.el-submenu__title{
+  transition: none !important;
+}
+.el-submenu{
+  transition: none !important;
+}
   

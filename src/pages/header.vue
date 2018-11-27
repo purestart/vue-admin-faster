@@ -1,5 +1,5 @@
 <template>
-    <div :class="Theme1.currentTheme.className" class="header-container">
+    <div :class="Theme.currentTheme.className" class="header-container">
        <div class="logo">
          <img src="../assets/logo.png">
        </div>
@@ -89,7 +89,7 @@
              
               @command="selectSelf"
             >
-              <span  class="el-dropdown-link" :style="{color:Theme1.currentTheme.headerFontColor}">
+              <span  class="el-dropdown-link" :style="{color:Theme.currentTheme.headerFontColor}">
                 <i class="el-icon-setting el-icon--left" ></i>设置
                 <!-- <i class="el-icon-arrow-down el-icon--right" ></i> -->
               </span>
@@ -104,9 +104,9 @@
                 <dropdown-item @mouseover="showThemeBox=true" @mouseout="showThemeBox=false" class="setting-theme-dropdown" style="position:relative" command="changetheme">
                   切换主题
                   <div v-if="showThemeBox" class="theme-menu-box" >
-                    <div @click="changeTheme('default')" class="theme-box"></div>
-                    <div @click="changeTheme('red-theme')" class="theme-box red-theme"></div>
-                    <div @click="changeTheme('gray-theme')" class="theme-box gray-theme"></div>
+                    <div v-for="(item,index) in themes" :key="index" :style="'background-color:'+item.baseColor" @click="toChangeTheme(item)" class="theme-box"></div>
+                    <!-- <div @click="changeTheme('red-theme')" class="theme-box red-theme"></div>
+                    <div @click="changeTheme('gray-theme')" class="theme-box gray-theme"></div> -->
                   </div>
                 </dropdown-item>
                  <!-- </el-popover> -->
@@ -263,13 +263,23 @@ export default {
   computed: {
     ...mapState({
       msg: state => state.default.msg,
-      // Theme: state => state.default.Theme,
-      Theme1: state => state.default.Theme1
+      Theme: state => state.default.Theme
     }),
     selected() {
       return this.userDashboard.map(
         userDashboard => userDashboard.dashboard.id
       );
+    },
+    themes(){
+      let list=[];
+      for (const key in this.Theme) {
+        if (key!=='currentTheme') {
+
+          list.push(this.Theme[key]);
+          
+        }
+      }
+      return list;
     }
   },
   created() {
@@ -277,7 +287,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["fetchCourse", "ThemeChange", "LoadHeader"]),
+    ...mapActions(["fetchCourse", "changeTheme"]),
     initData() {
       let { data } = require("./dashboard/userDashBoard.json");
       console.log(data);
@@ -372,18 +382,10 @@ export default {
       }
       return { x: startX, y: startY };
     },
-    changeTheme(a) {
-      console.log(a);
-      this.ThemeChange();
-      // switch (a) {
-      //   case "1":
-      //     break;
-      //   case "2":
-      //     break;
-      //   case "changetheme":
-      //    // this.ThemeChange();
-      //     break;
-      // }
+    toChangeTheme(val) {
+      console.log(val);
+      this.changeTheme(val);
+
     },
     selectSelf(a) {
       switch (a) {
@@ -586,7 +588,7 @@ export default {
     .theme-box{
       width:30px;
       height: 30px;
-      background-color:#fee;
+      // background-color:#fee;
       cursor: pointer;
       &.red-theme{
         background-color:#f08519;

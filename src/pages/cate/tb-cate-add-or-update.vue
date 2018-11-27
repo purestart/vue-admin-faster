@@ -7,10 +7,9 @@
  <edit-model  @submit="dataFormSubmit()" title="编辑" :modelVisible="visible" @close="closeModel">
     <el-form class="form-wrapper" :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
 
-      <el-form-item label="分类名称" prop="name">
-        <el-input v-model="dataForm.name" placeholder="分类名称"></el-input>
-      </el-form-item>
-    
+    <el-form-item label="分类名称" prop="name">
+      <el-input v-model="dataForm.name" placeholder="分类名称"></el-input>
+    </el-form-item>
     
     <el-form-item label="上级部门" prop="parent_name">
         <el-popover
@@ -30,10 +29,9 @@
         <el-input v-model="dataForm.parent_name" v-popover:deptListPopover :readonly="true" placeholder="上级部门"></el-input>
      </el-form-item>
 
-      <el-form-item label="排序" prop="order_num">
-        <el-input-number v-model="dataForm.order_num" placeholder="排序"  ></el-input-number>
+      <el-form-item label="排序" prop="orderNum">
+        <el-input-number v-model="dataForm.orderNum" placeholder="排序"  ></el-input-number>
       </el-form-item>
-    
     
       <el-form-item label="备注" prop="remarks">
         <el-input type="textarea" :rows="3" v-model="dataForm.remarks" placeholder="备注"></el-input>
@@ -63,8 +61,8 @@
         dataForm: {
           id: "",
           name: "",
-          parent_id: "",
-          order_num: "",
+          parentId: "",
+          orderNum: "",
           remarks: "",
           
           parent_name:""
@@ -73,7 +71,7 @@
           name: [
                       { required: true, message: '分类名称不能为空', trigger: 'blur' }
                     ],
-          parent_id: [
+          parentId: [
                       { required: true, message: '父级Id不能为空', trigger: 'blur' }
                     ],
           
@@ -95,7 +93,6 @@
         this.getDeptList();
         this.$nextTick(() => {
           this.$refs['dataForm'].resetFields();
-
           if (this.dataForm.id) {
             this.getInfo()
           }
@@ -108,7 +105,7 @@
             this.deptList=[{
               id:0,
               name:"一级部门",
-              parent_id:0,
+              parentId:0,
               children:data.data
             }];
           }
@@ -120,12 +117,12 @@
           if (data && data.success === 1) {
           
              this.dataForm.name = data.data.name
-             this.dataForm.parent_id = data.data.parent_id
-             this.dataForm.order_num = data.data.order_num
+             this.dataForm.parentId = data.data.parentId
+             this.dataForm.orderNum = data.data.orderNum
              this.dataForm.remarks = data.data.remarks
             // 部门树设置当前选中节点
-            this.$refs.deptListTree.setCurrentKey(this.dataForm.parent_id)
-            this.dataForm.parent_name = this.dataForm.parent_id === this.$refs.deptListTree.getCurrentKey()
+            this.$refs.deptListTree.setCurrentKey(this.dataForm.parentId)
+            this.dataForm.parent_name = this.dataForm.parentId === this.$refs.deptListTree.getCurrentKey()
               ? this.$refs.deptListTree.getCurrentNode()['name']
               : ''
           }
@@ -133,7 +130,7 @@
       },
       // 部门树选中
       deptListTreeCurrentChangeHandle (data, node) {
-        this.dataForm.parent_id = data.id
+        this.dataForm.parentId = data.id
         this.dataForm.parent_name = data.name
       },
       // 表单提交
@@ -148,9 +145,9 @@
                 
                       'name': this.dataForm.name,
                 
-                      'parent_id': this.dataForm.parent_id,
+                      'parentId': this.dataForm.parentId,
                 
-                      'order_num': this.dataForm.order_num,
+                      'orderNum': this.dataForm.orderNum,
                 
                       'remarks': this.dataForm.remarks,
                 

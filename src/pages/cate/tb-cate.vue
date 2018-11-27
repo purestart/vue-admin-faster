@@ -1,26 +1,7 @@
 
 <template>
   <div class="page-cate--list">
-
-    <div v-if="advanceSearchVisible" class="item-editer">
-        <el-card>
-            <div class="edit-box">
-                <div class="input-box">
-                    <div class="item-row">
-                        
-                    </div>
-                </div>
-                <div class="submit-box">
-                    <div>
-                        <el-button type="danger" @click="resetForm()" size="mini">重置</el-button>
-                    </div>
-                     <div class="btn">
-                        <el-button type="primary" @click="queryForm()" size="mini">提交</el-button>
-                     </div>
-                </div>
-            </div>
-        </el-card>
-    </div>
+    
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
 
       <el-form-item>
@@ -64,12 +45,6 @@
       @selectionChange="selectionChangeHandle"
       :expandAll="expandAll" >
 
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
 
       <el-table-column
         prop="name"
@@ -79,7 +54,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="order_num"
+        prop="orderNum"
         header-align="center"
         align="center"
         label="排序">

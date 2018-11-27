@@ -9,7 +9,6 @@
       <el-form-item label="内容" prop="content">
         <input type="file" @change="getFileContent" placeholder="内容"/>
       </el-form-item>
-
     
       <el-form-item label="备注" prop="remarks">
         <el-input type="textarea" :rows="3" v-model="dataForm.remarks" placeholder="备注"></el-input>
@@ -92,8 +91,8 @@
         reader.readAsText(file, "UTF-8");
         let that=this;
         reader.onload = function(evt) {
-          console.log("onload");
-          console.log(evt.target.result);
+          // console.log("onload");
+          // console.log(evt.target.result);
           that.dataForm.content=encodeURI(evt.target.result);
           that.dataForm.file_name=file.name;
         }

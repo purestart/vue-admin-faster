@@ -1,12 +1,12 @@
 <template>
-    <div id="index-container">
+    <div :style="'background-image:url('+Theme.currentTheme.bacgroundImage+')'" id="index-container">
         
         <div class="header">
             <Header></Header>
         </div>
         <div class="body">
-            <div :style="'background-color:'+Theme1.currentTheme.navBgColor" :class="ShowHide?'close-nav':'nav'" >
-               <div :style="'background-color:'+Theme1.currentTheme.baseColor" class="ShowHide YShowHide" @click="toggleShow($event)">
+            <div :style="'background-color:'+Theme.currentTheme.navBgColor" :class="ShowHide?'close-nav':'nav'" >
+               <div :style="'background-color:'+Theme.currentTheme.baseColor" class="ShowHide YShowHide" @click="toggleShow($event)">
                  <i class="el-icon-d-arrow-left" v-if="!ShowHide"></i>
                  <i class="el-icon-d-arrow-right" v-else></i>
                </div>
@@ -46,14 +46,13 @@ export default {
     ...mapState({
       msg:state=>state.default.msg,
       Theme:state=>state.default.Theme,
-      header:state=>state.default.header,
-      Theme1:state=>state.default.Theme1,
+      
     }),
   },
   watch:{
   },
   methods: {
-    ...mapActions(["fetchCourse","deftheme","LoadHeader"]),
+    ...mapActions(["fetchCourse","deftheme"]),
     toggleShow($event) {
       this.ShowHide = !this.ShowHide;
      // this.lips=!this.lips;
@@ -63,7 +62,6 @@ export default {
   mounted() {
     this.fetchCourse();
     this.deftheme();
-    this.LoadHeader();
   },
   components: {
     Nav,
@@ -153,7 +151,7 @@ export default {
    /* position: absolute;  */
    /* left: 199px; top: 0; right: 0; bottom: 0; */
    overflow: auto;
-   background: #f0f2f5;
+  //  background: #f0f2f5;
    min-width: 800px;
    /* z-index: 200; */
    flex: 1;

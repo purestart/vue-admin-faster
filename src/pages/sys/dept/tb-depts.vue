@@ -122,8 +122,8 @@
 
 <script>
   import AddOrUpdate from './dept-add-or-update';
-  import treeTable from '../../components/TreeTable'
-  import treeToArray from '../../components/TreeTable/eval.js'
+  import treeTable from '../../../components/TreeTable'
+  import treeToArray from '../../../components/TreeTable/eval.js'
 
   export default {
     data () {

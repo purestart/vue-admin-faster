@@ -1,7 +1,7 @@
 
 <template>
   <div class="page-sys--list">
-
+    
     <div v-if="advanceSearchVisible" class="item-editer">
         <el-card>
             <div class="edit-box">
@@ -19,7 +19,7 @@
                             <el-date-picker
                             class="item-input" size="small"
                               type="datetime"
-                              v-model="dataForm.create_date"
+                              v-model="dataForm.createDate"
                               placeholder="创建日期"
                             >
                             </el-date-picker>
@@ -41,7 +41,7 @@
                             <el-date-picker
                             class="item-input" size="small"
                               type="datetime"
-                              v-model="dataForm.update_date"
+                              v-model="dataForm.updateDate"
                               placeholder="更新日期"
                             >
                             </el-date-picker>
@@ -60,17 +60,18 @@
             </div>
         </el-card>
     </div>
+    
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
 
       <el-form-item>
         <el-input size="small"  v-model="dataForm.name" placeholder="x姓名" clearable></el-input>
       </el-form-item>
   
-      <el-form-item prop="create_date">
+      <el-form-item prop="createDate">
         <el-date-picker
           size="small" 
           type="datetime"
-          v-model="dataForm.create_date"
+          v-model="dataForm.createDate"
           placeholder="创建日期"
         >
         </el-date-picker>
@@ -83,6 +84,10 @@
         
       <el-form-item v-if="$hasPermission('sys:customs:save')">
           <el-button size="small"  type="primary" @click="addOrUpdateHandle()">新增</el-button>
+      </el-form-item>
+         
+      <el-form-item v-if="$hasPermission('sys:customs:delete')">
+          <el-button size="small"  type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
          
       <el-form-item  v-if="$hasPermission('sys:customs:query')"  style="float:right">
@@ -117,7 +122,7 @@
         label="创建日期">
         <template slot-scope="scope">
             <div>
-                {{scope.row.create_date | dateformat}}
+                {{scope.row.createDate | dateformat}}
             </div>
         </template>
       </el-table-column>
@@ -160,10 +165,10 @@
       <el-table-column
         header-align="center"
         align="center"
-        label="创建日期">
+        label="更新日期">
         <template slot-scope="scope">
             <div>
-                {{scope.row.update_date | dateformat}}
+                {{scope.row.updateDate | dateformat}}
             </div>
         </template>
       </el-table-column>
@@ -179,6 +184,8 @@
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)"  v-if="$hasPermission('sys:customs:edit')">修改</el-button>
               
           
+          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)"  v-if="$hasPermission('sys:customs:delete')">删除</el-button>
+              
         </template>
       </el-table-column>
     </el-table>
@@ -205,7 +212,7 @@
       return {
         dataForm: {
           name: '',
-          create_date: '',
+          createDate: '',
           
         },
         query:{},

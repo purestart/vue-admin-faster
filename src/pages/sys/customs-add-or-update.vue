@@ -1,3 +1,8 @@
+/*
+* Description:客户表
+* Author:zcl
+* Update:
+*/
 <template>
  <edit-model  @submit="dataFormSubmit()" title="编辑" :modelVisible="visible" @close="closeModel">
     <el-form class="form-wrapper" :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
@@ -6,10 +11,10 @@
         <el-input v-model="dataForm.name" placeholder="x姓名"></el-input>
       </el-form-item>
     
-      <el-form-item label="创建日期" prop="create_date">
+      <el-form-item label="创建日期" prop="createDate">
         <el-date-picker
           type="datetime"
-          v-model="dataForm.create_date"
+          v-model="dataForm.createDate"
           placeholder="创建日期"
         >
         </el-date-picker>
@@ -43,10 +48,10 @@
         <el-input v-model="dataForm.remarks" placeholder="其它"></el-input>
       </el-form-item>
     
-      <el-form-item label="更新日期" prop="update_date">
+      <el-form-item label="更新日期" prop="updateDate">
         <el-date-picker
           type="datetime"
-          v-model="dataForm.update_date"
+          v-model="dataForm.updateDate"
           placeholder="更新日期"
         >
         </el-date-picker>
@@ -70,14 +75,14 @@
         dataForm: {
           id: "",
           name: "",
-          create_date: "",
+          createDate: "",
           age: "",
           mytext: "",
           blog: "",
           fl: "",
           db: "",
           remarks: "",
-          update_date: "",
+          updateDate: "",
           
         },
         dataRule: {
@@ -116,14 +121,14 @@
           if (data && data.success === 1) {
           
              this.dataForm.name = data.data.name
-             this.dataForm.create_date = data.data.create_date
+             this.dataForm.createDate = data.data.createDate
              this.dataForm.age = data.data.age
              this.dataForm.mytext = data.data.mytext
              this.dataForm.blog = data.data.blog
              this.dataForm.fl = data.data.fl
              this.dataForm.db = data.data.db
              this.dataForm.remarks = data.data.remarks
-             this.dataForm.update_date = data.data.update_date
+             this.dataForm.updateDate = data.data.updateDate
           }
         })
       },
@@ -139,7 +144,7 @@
                 
                       'name': this.dataForm.name || undefined,
                 
-                      'create_date': this.dataForm.create_date || undefined,
+                      'createDate': this.dataForm.createDate || undefined,
                 
                       'age': this.dataForm.age || undefined,
                 
@@ -153,7 +158,7 @@
                 
                       'remarks': this.dataForm.remarks || undefined,
                 
-                      'update_date': this.dataForm.update_date || undefined,
+                      'updateDate': this.dataForm.updateDate || undefined,
                 
               }
             ).then(({data}) => {

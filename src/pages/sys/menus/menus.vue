@@ -81,8 +81,8 @@
   Auth: Lei.j1ang
   Created: 2018/1/19-14:54
 */
-import treeTable from '../../components/TreeTable'
-import treeToArray from '../../components/TreeTable/eval.js'
+import treeTable from '../../../components/TreeTable'
+import treeToArray from '../../../components/TreeTable/eval.js'
 import AddOrUpdate from './menu-add-or-update'
 
 export default {
