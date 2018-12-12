@@ -1,6 +1,6 @@
 
+@import "./variable.scss";
 // 弹出框设置
-
 .el-notification .el-icon-warning{
     color:#faa82d;
   }
@@ -51,8 +51,6 @@
   }
 
   //图片上传组件
-
-  
 .avatar-uploader
 {
   .el-upload {
@@ -80,9 +78,7 @@
     height: 178px;
     display: block;
   }
-
 }
-
 .avatar-uploader-longer
 {
   .el-upload {
@@ -110,19 +106,14 @@
     height: 178px;
     display: block;
   }
-
 }
 
 //字体调整
-
 .el-table--mini, .el-table--small, .el-table__expand-icon {
     font-size: 14px;
 }
-
 .el-menu-item {
-
   transition: none !important;
-
 }
 .el-submenu__title{
   transition: none !important;

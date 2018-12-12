@@ -97,7 +97,7 @@ module.exports =[
             let db=obj.database;
             //获取数据库信息
             let database=await dbInfoService.getDbById(db.id);
-            let sql = "select IS_NULLABLE nullAble, column_name columnName, data_type dataType, column_comment columnComment, column_key columnKey, extra from information_schema.columns where table_name = '"+table.tableName+"' and table_schema = (select database()) order by ordinal_position"
+            let sql = "select IS_NULLABLE nullAble, column_name columnName,CHARACTER_MAXIMUM_LENGTH maxLength, data_type dataType, column_comment columnComment, column_key columnKey, extra from information_schema.columns where table_name = '"+table.tableName+"' and table_schema = (select database()) order by ordinal_position"
             let ret = await query( sql ,database);
 
             let attrsObj=[];

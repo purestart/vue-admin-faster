@@ -7,6 +7,7 @@ import axios from 'axios';
 import store from './store/index';
 import Cookies from 'js-cookie'
 import moment from 'moment'
+import utils from './assets/utils/index';
 
 Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   if(dataStr){
@@ -15,6 +16,8 @@ Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
     return "";
   }
 })
+
+Vue.use(utils);
 
 import { hasPermission } from '@/utils';
 import {url} from './config/index';
