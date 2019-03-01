@@ -1,12 +1,12 @@
 /**
-* @Author: ZhanChenLong
-* @Date:   2018-7-30 11:06:49
-*/
+ * @Author: ZhanChenLong
+ * @Date:   2018-7-30 11:06:49
+ */
 'use strict'
 import Vue from 'vue'
-export default function treeToArray(data, expandAll, parent = null, level = null) {
+export default function treeToArray (data, expandAll, parent = null, level = null) {
   let tmp = []
-  Array.from(data).forEach(function(record) {
+  Array.from(data).forEach(function (record) {
     if (record._expanded === undefined) {
       Vue.set(record, '_expanded', expandAll)
     }

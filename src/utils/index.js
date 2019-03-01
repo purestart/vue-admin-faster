@@ -1,58 +1,44 @@
-import Cookies from 'js-cookie'
-import store from '@/store'
+import constant from './constant'
+import ls from './lsUtils'
+import utils from './uiUtils'
+import axios from 'axios'
+import * as config from '../config/index'
 
-/**
- * 获取uuid
- */
-export function getUUID () {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    return (c === 'x' ? (Math.random() * 16 | 0) : ('r&0x3' | '0x8')).toString(16)
-  })
-}
+export default {
+  install (Vue, $i18n) {
+    Vue.prototype.$axios = axios
+    Vue.prototype.$bus = utils.bus
+    Vue.prototype.$c = constant
+    Vue.prototype.$ls = ls
+    Vue.prototype.$utils = utils
+    Vue.prototype.$config = config
 
-/**
- * 权限
- * @param {*} key
- */
-export function hasPermission (key) {
-  return true;
-  //return store.state.default.permissions.indexOf(key) !== -1 || false
-}
-
-/**
- * 树形数据转换
- * @param {*} data
- * @param {*} id
- * @param {*} pid
- */
-export function treeDataTranslate (data, id = 'id', pid = 'parentId') {
-  var res = []
-  var temp = {}
-  for (var i = 0; i < data.length; i++) {
-    temp[data[i][id]] = data[i]
-  }
-  for (var k = 0; k < data.length; k++) {
-    if (temp[data[k][pid]] && data[k][id] !== data[k][pid]) {
-      if (!temp[data[k][pid]]['children']) {
-        temp[data[k][pid]]['children'] = []
+    // 权限检查方法
+    Vue.prototype.$_has = function (value) {
+      // debugger
+      console.log(value)
+      let isExist = false
+      let buttonpermsStr = sessionStorage.getItem('buttenpremissions')
+      if (buttonpermsStr === undefined || buttonpermsStr == null) {
+        return false
       }
-      if (!temp[data[k][pid]]['_level']) {
-        temp[data[k][pid]]['_level'] = 1
+      let buttonperms = JSON.parse(buttonpermsStr)
+      for (let i = 0; i < buttonperms.length; i++) {
+        if (buttonperms[i].perms.indexOf(value) > -1) {
+          isExist = true
+          break
+        }
       }
-      data[k]['_level'] = temp[data[k][pid]]._level + 1
-      temp[data[k][pid]]['children'].push(data[k])
-    } else {
-      res.push(data[k])
+      return isExist
     }
-  }
-  return res
-}
 
-/**
- * 清除登录信息
- */
-export function clearLoginInfo () {
-  Cookies.remove('token')
-  store.commit('resetStore')
-  window.SITE_CONFIG['dynamicMenuRoutesHasAdded'] = false
+    /** 权限指令**/
+    Vue.directive('auth', {
+      bind: function (el, binding) {
+        if (!Vue.prototype.$_has(binding.value)) {
+          el.parentNode.removeChild(el)
+        }
+      }
+    })
+  }
 }
