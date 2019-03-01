@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import echarts from 'echarts'
 import ElementUI from 'element-ui'
 import formVerify from './global/formVerify'
 import regComponents from './global/regComponents.js'
@@ -10,7 +10,7 @@ import 'flex.css'
 import './assets/css/base.scss'
 import utils from './utils'
 import './assets/icons/icon'
-
+Vue.prototype.$echarts = echarts
 Vue.use(ElementUI, {
   size: 'small'
 })

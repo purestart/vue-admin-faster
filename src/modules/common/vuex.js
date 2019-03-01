@@ -49,28 +49,6 @@ let tmpMenus = [{
     'menuType': 0,
     'applicationId': 81,
     'isVisible': 1
-  }, {
-    'id': 68,
-    'parentId': 67,
-    'children': [],
-    'name': '我的项目',
-    'icon': null,
-    'sortNo': 2,
-    'menuUrl': '/myProject',
-    'menuType': 0,
-    'applicationId': 81,
-    'isVisible': 1
-  }, {
-    'id': 71,
-    'parentId': 67,
-    'children': [],
-    'name': '我的已办',
-    'icon': null,
-    'sortNo': 3,
-    'menuUrl': '/finishAgent',
-    'menuType': 0,
-    'applicationId': 81,
-    'isVisible': 1
   }],
   'name': '我的工作台',
   'icon': 'icon-fa-columns',
@@ -79,6 +57,113 @@ let tmpMenus = [{
   'menuType': 1,
   'applicationId': 81,
   'isVisible': 1
+}, {
+  'id': 99,
+  'name': '常用组件',
+  'icon': 'icon-gongnengdingyi',
+  'sortNo': 2,
+  'menuUrl': null,
+  'menuType': 1,
+  'applicationId': 81,
+  'isVisible': 1,
+  'children': [{
+    'id': 991,
+    'parentId': 99,
+    'children': [],
+    'name': '动态表格',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/table',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }, {
+    'id': 992,
+    'parentId': 99,
+    'children': [],
+    'name': '动态表单',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/table',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }, {
+    'id': 993,
+    'parentId': 99,
+    'children': [],
+    'name': 'TreeTable',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/table',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }, {
+    'id': 994,
+    'parentId': 99,
+    'children': [],
+    'name': '地图选址',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/table',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }, {
+    'id': 999,
+    'parentId': 99,
+    'children': [],
+    'name': '文件上传',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/table',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }]
+}, {
+  'id': 88,
+  'name': '综合图表',
+  'icon': 'icon-jichuguanli',
+  'sortNo': 2,
+  'menuUrl': null,
+  'menuType': 1,
+  'applicationId': 81,
+  'isVisible': 1,
+  'children': [{
+    'id': 881,
+    'parentId': 88,
+    'children': [],
+    'name': '综合图表',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/chart',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }]
+}, {
+  'id': 66,
+  'name': '编辑器',
+  'icon': 'icon-tianshenpi',
+  'sortNo': 2,
+  'menuUrl': null,
+  'menuType': 1,
+  'applicationId': 81,
+  'isVisible': 1,
+  'children': [{
+    'id': 661,
+    'parentId': 66,
+    'children': [],
+    'name': '文章编辑示例',
+    'icon': null,
+    'sortNo': 3,
+    'menuUrl': '/editor',
+    'menuType': 0,
+    'applicationId': 81,
+    'isVisible': 1
+  }]
 }, {
   'id': 77,
   'parentId': 0,

@@ -6,6 +6,7 @@ import Page404 from './modules/common/view/Page404.vue'
 import dashboard from './modules/dashboard/router.js'
 import system from './modules/system/router'
 import publicRouter from './modules/public/router'
+import chart from './modules/chart/router'
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ export default new Router({
       component: MainLayout,
       children: [
         ...dashboard,
-        ...system
+        ...system,
+        ...chart
       ]
     },
     // {
