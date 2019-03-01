@@ -18,7 +18,7 @@
 
 # vue-admin-faster
 
-purestart vue-fabric.
+purestart vue-admin-faster.
 
 <img src="https://gitee.com/_pure/codes/dn4u2bw65zxemfklcao9i45/raw?blob_name=vue-admin-faster.png>
 
