@@ -168,6 +168,7 @@ export default {
     background-color: #f8f8f8;
     z-index: 999;
     border-top: 1px solid #e4e4e4;
+    box-sizing: border-box;
   }
 }
 </style>

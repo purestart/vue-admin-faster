@@ -52,7 +52,8 @@ export default {
             verify: { required: true },
             options: [
               { label: '菜单', value: 0 },
-              { label: '目录', value: 1 }
+              { label: '目录', value: 1 },
+              { label: '按钮', value: 2 }
             ]
           },
           { label: '菜单名称', prop: 'name', type: 'text', verify: { required: true, maxLength: 100 } },

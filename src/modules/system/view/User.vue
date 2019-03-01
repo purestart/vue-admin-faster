@@ -50,7 +50,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination-wraper">
+    <div class="m-t-16 a-c">
       <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
@@ -220,12 +220,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sys-user--list {
-  margin: 16px;
   padding: 16px;
   background-color: #ffffff;
-  .pagination-wraper {
-    margin-top: 16px;
-    text-align: right;
-  }
 }
 </style>

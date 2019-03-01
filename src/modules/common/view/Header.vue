@@ -1,27 +1,19 @@
 <template>
   <div class="header-container">
     <div class="logo" :class="isCollapse?'collapse':''">
-      <img v-if="!isCollapse" class="p-l-20" src="../../../assets/logo.png">
+      <!-- <img v-if="!isCollapse" class="img-logo p-l-20" src="../../../assets/logo1.png"> -->
+      <span v-if="!isCollapse" class="f-18">LOGO</span>
       <cc-icon v-if="isCollapse" name="gcjzlogo" size="37" />
     </div>
     <div class="h_nav">
       <cc-icon :name="isCollapse?'expand':'unexpand'" @click="expandChange" size="50" class="expand" />
       <ul class="list">
-        <li>工程精装项目管理系统</li>
-        <!-- <el-popover placement="bottom" width="300" trigger="hover">
+        <li>后台管理系统</li>
+        <el-popover placement="bottom" width="300" trigger="hover">
           <div style="display:flex">
-            <div
-              @click="toPage('eng-chart')"
-              style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;"
-            >工程线</div>
-            <div
-              @click="toPage('dealer-chart')"
-              style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;"
-            >经销商</div>
-            <div
-              @click="toPage('work-team')"
-              style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;"
-            >施工队</div>
+            <div @click="toPage('eng-chart')" style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;">工程线</div>
+            <div @click="toPage('dealer-chart')" style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;">经销商</div>
+            <div @click="toPage('work-team')" style="cursor: pointer;flex:1;text-align:center;padding:10px;5px;background-color:#f2f2f2;margin:5px;">施工队</div>
           </div>
           <li slot="reference">驾驶舱</li>
         </el-popover>
@@ -31,7 +23,7 @@
             <el-dropdown-item command="安全设置">客服系统</el-dropdown-item>
             <el-dropdown-item command="changetheme">呼叫中心系统</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>-->
+        </el-dropdown>
       </ul>
       <div class="h_user">
         <!-- <div class="gap"></div> -->
@@ -50,7 +42,7 @@
         <!-- <div class="gap"></div> -->
         <div class="h-100 f-14 m-r-15">
           <span class="h-100 a-c p-r-15">
-            <a class="c-white" target="_blank" href="http://mamap.oppeinsoft.com/Login.aspx">旧系统</a>
+            <a class="c-white" target="_blank" href="#">旧系统</a>
           </span>
           <a class="h-100 a-c p-r-15 c-white" style="cursor: pointer;" href="/docs" target="_blank">
             <cc-icon name="wenhao" size="16" />
@@ -70,10 +62,10 @@
         </el-dropdown>
       </div>
     </div>
-    <!-- <edit-model :hideSubmitBtn="$utils.getUserInfo('userType') === $c.UserTypeV.欧派" title="修改个人信息" :modelVisible="modelVisibleUser" @submit="onSubmitUser" @close="modelVisibleUser=false">
+    <edit-model :hideSubmitBtn="false" title="修改个人信息" :modelVisible="modelVisibleUser" @submit="onSubmitUser" @close="modelVisibleUser=false">
       <dy-form v-if="!isPwd" ref="formUser" :data="formDataUser" class="my-form col-2 m-r-16 p-v-16"></dy-form>
       <dy-form v-else ref="formPwd" :data="formDataPwd" class="my-form col-2 m-r-16 p-v-16"></dy-form>
-    </edit-model> -->
+    </edit-model>
   </div>
 </template>
 
@@ -256,7 +248,8 @@ export default {
           this.modelVisible = true
           break
         case '3':
-          this.doLogout()
+          // this.doLogout()
+          this.$router.push('/login')
           break
         case 'changetheme':
           // this.ThemeChange();
@@ -294,9 +287,17 @@ export default {
     // line-height: 28px;
     display: flex;
     align-items: center;
+    box-pack: center;
+    -webkit--moz-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
     // transition: all .5s;
     &.collapse {
       width: 37px;
+    }
+    img {
+      max-height: 50px;
     }
     // padding-left: 20px;
     // padding: 16px 35px 6px 25px;
@@ -319,9 +320,12 @@ export default {
         height: 100%;
         font-size: 15px;
 
-        color: $fontcolor;
+        color: white;
         line-height: 50px;
         text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        cursor: pointer;
         // &:hover {
         //   // border-bottom: 2px solid $focusfontcolor;
         //   // cursor: pointer;

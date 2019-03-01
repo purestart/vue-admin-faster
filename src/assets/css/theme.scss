@@ -1,5 +1,5 @@
 /**
- * Created by 熊超超 on 2017/8/4.
+ *  2017/8/4.
  */
 @import "./vars";
 /* 改变element-ui默认主题变量 */
@@ -352,4 +352,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding: 10px;
   font-size: 14px;
   color: $color-nodata;
+}
+
+.login-box {
+  .el-input__inner {
+    padding-left: 30px !important;
+  }
+
+  .el-input__prefix {
+    line-height: 40px;
+  }
 }

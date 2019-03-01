@@ -48,8 +48,8 @@
       </el-table-column>
     </tree-table>
     <!-- </el-table> -->
-    <div class="pagination-wraper">
-      <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
+    <div class="m-t-10 a-c">
+      <el-pagination class="a-c" @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
     <!-- 弹窗, 新增 / 修改 -->
@@ -184,12 +184,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-dept--list {
-  margin: 16px;
   padding: 16px;
   background-color: #ffffff;
-  .pagination-wraper {
-    margin-top: 16px;
-    text-align: right;
-  }
 }
 </style>

@@ -1,29 +1,25 @@
 <template>
   <div class="login-box">
     <div class="mian-box">
-      <img src="">
-      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
+      <!-- <img src=""> -->
+      <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container full-width">
         <div class="header">
-          <img src="">
+          <!-- <img src=""> -->
           <h3 class="title">
-            <span class="tit-one">工程精装项目管理系统</span>
+            <span class="tit-one">XXX后台管理系统</span>
             <span class="tit-two">Engineering Hardcover Project Management System</span>
           </h3>
-          <img src="">
+          <!-- <img src=""> -->
         </div>
-        <!--<el-form-item prop="organNum">-->
-        <!--<el-input type="text"  v-model="ruleForm2.organNum" auto-complete="off" placeholder="请输入组织机构代码"></el-input>-->
-        <!--<span class="el-input__prefix "><img class="myIcon el-input__icon" src="../assets/images/login_icon1_n.png"></span>-->
-        <!--</el-form-item>-->
-        <el-form-item prop="code">
+        <el-form-item prop="companyCode">
           <el-input type="text" v-model="ruleForm2.companyCode" auto-complete="off" placeholder="请输入组织编码"></el-input>
           <span class="el-input__prefix "><img class="myIcon el-input__icon" src="../../../assets/images/login_icon2_n.png"></span>
         </el-form-item>
-        <el-form-item prop="account">
+        <el-form-item prop="userName">
           <el-input type="text" v-model="ruleForm2.userName" auto-complete="off" placeholder="请输入账户号码"></el-input>
           <span class="el-input__prefix "><img class="myIcon el-input__icon" src="../../../assets/images/login_icon2_n.png"></span>
         </el-form-item>
-        <el-form-item prop="checkPass">
+        <el-form-item prop="password">
           <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="请输入密码"></el-input>
           <span class="el-input__prefix "><img class="myIcon el-input__icon" src="../../../assets/images/login_icon3_n.png"></span>
         </el-form-item>
@@ -44,6 +40,9 @@ export default {
     return {
       logining: false,
       ruleForm2: {
+        companyCode: 'MH00000',
+        userName: 'admin',
+        password: '123456'
       },
       rules2: {
         // organNum: [
@@ -67,13 +66,14 @@ export default {
       this.$refs.ruleForm2.resetFields()
     },
     async handleSubmit2 () {
-      const { data } = await this.$store.dispatch('nativeLogin', this.ruleForm2)
-      if (data) {
-        localStorage.setItem('nativeLogin', 1)
-        localStorage.setItem('token', data.token)
-        this.$store.commit('updateUser', data)
-        this.$router.push('/')
-      }
+      this.$router.push('/home')
+      // const { data } = await this.$store.dispatch('nativeLogin', this.ruleForm2)
+      // if (data) {
+      //   localStorage.setItem('nativeLogin', 1)
+      //   localStorage.setItem('token', data.token)
+      //   this.$store.commit('updateUser', data)
+      //   this.$router.push('/')
+      // }
     }
   }
 }
@@ -103,11 +103,16 @@ export default {
       background-clip: padding-box;
       height: 100%;
       width: 50%;
-      padding: 35px 35px 15px 35px;
+      padding: 95px 35px 15px 35px;
       background: #fff;
       /*border: 1px solid #eaeaea;*/
       .header {
         display: flex;
+        -webkit--moz-box-pack: center;
+        -moz-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        width: 100%;
         img {
           width: 44px;
           margin-top: 4px;
